@@ -1,0 +1,1259 @@
+﻿<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com">
+  // Filter Chips Logic
+  function removeFilterChip(btn) {
+    const chip = btn.closest('.filter-chip');
+    if (chip) {
+      chip.remove();
+      const remaining = document.querySelectorAll('.filter-chip').length;
+      showToast(`Filter removed (${remaining} filters active)`, { icon: 'tune' });
+      const badge = document.querySelector('#toggleFilterBtn span:last-child');
+      if (badge) badge.textContent = remaining;
+    }
+  }
+
+  function clearAllFilters() {
+    document.querySelectorAll('.filter-chip').forEach(c => c.remove());
+    showToast('All filters cleared', { icon: 'refresh' });
+    const badge = document.querySelector('#toggleFilterBtn span:last-child');
+    if (badge) badge.textContent = '0';
+    document.querySelectorAll('.sidebar-size-btn').forEach(b => {
+      b.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+      b.classList.add('bg-surface', 'text-on-surface');
+    });
+  }
+
+  function selectSidebarSize(btn) {
+    document.querySelectorAll('.sidebar-size-btn').forEach(b => {
+      b.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+      b.classList.add('bg-surface', 'text-on-surface');
+    });
+    btn.classList.add('bg-primary', 'text-on-primary', 'shadow-sm');
+    btn.classList.remove('bg-surface', 'text-on-surface');
+    showToast(`Filter applied: Size ${btn.textContent.trim()}`, { icon: 'tune' });
+  }
+
+  function selectSidebarColor(btn, colorName) {
+    document.querySelectorAll('[title]').forEach(b => b.classList.remove('ring-2', 'ring-primary'));
+    btn.classList.add('ring-2', 'ring-primary');
+    showToast(`Filter applied: Tone ${colorName}`, { icon: 'palette' });
+  }
+
+  function updatePriceSlider(val) {
+    const label = document.getElementById('maxPriceLabel');
+    if (label) label.textContent = `Max: ₨ ${parseInt(val).toLocaleString()}`;
+  }
+
+  function sortProducts(sortBy) {
+    showToast(`Sorted by: ${sortBy.replace('-', ' ').toUpperCase()}`, { icon: 'sort' });
+  }
+
+  function goToPage(pageNo, btn) {
+    document.querySelectorAll('.pagination-btn').forEach(b => {
+      b.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+      b.classList.add('bg-surface', 'text-on-surface');
+    });
+    btn.classList.add('bg-primary', 'text-on-primary', 'shadow-sm');
+    btn.classList.remove('bg-surface', 'text-on-surface');
+    showToast(`Navigated to page ${pageNo}`, { icon: 'auto_stories' });
+    window.scrollTo({ top: 300, behavior: 'smooth' });
+  }
+
+</script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"inverse-surface":"#30312e","on-surface":"#1b1c1a","surface-container-lowest":"#ffffff","primary-fixed":"#e6e2df","surface-container-high":"#eae8e4","secondary-container":"#fedeb2","on-primary-fixed-variant":"#484645","surface":"#FAF7F2","on-tertiary":"#ffffff","inverse-primary":"#cac6c4","on-primary-container":"#868382","tertiary-container":"#281812","inverse-on-surface":"#f2f0ed","tertiary":"#000000","on-error-container":"#93000a","background":"#FAF7F2","on-secondary-fixed":"#281800","on-primary-fixed":"#1c1b1a","primary":"#000000","surface-variant":"#e4e2de","on-secondary-fixed-variant":"#584323","on-surface-variant":"#4a4640","surface-bright":"#FAF7F2","on-secondary-container":"#78603e","on-tertiary-container":"#977e76","secondary-fixed":"#fedeb2","secondary-fixed-dim":"#e0c298","surface-container-low":"#f5f3ef","surface-container":"#efeeea","primary-fixed-dim":"#cac6c4","outline":"#7c766f","surface-tint":"#605e5c","on-background":"#1b1c1a","error-container":"#ffdad6","on-error":"#ffffff","secondary":"#8A6D4B","surface-dim":"#dbdad6","tertiary-fixed":"#fbdcd2","primary-container":"#1c1b1a","on-primary":"#ffffff","outline-variant":"#ccc5bd","on-tertiary-fixed-variant":"#57423b","on-secondary":"#ffffff","error":"#ba1a1a","on-tertiary-fixed":"#281812","tertiary-fixed-dim":"#ddc0b6","surface-container-highest":"#e4e2de"},borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},spacing:{gutter:"1.5rem","space-md":"1rem","space-sm":"0.5rem","margin-mobile":"1.25rem","space-xl":"2.5rem",margin:"3rem","space-lg":"1.5rem","gutter-mobile":"0.75rem","space-xs":"0.25rem"},fontFamily:{"headline-sm":["Cormorant Garamond", "serif"],"label-sm":["Jost", "sans-serif"],"title-editorial":["Cormorant Garamond", "serif"],"body-sm":["Jost", "sans-serif"],"price-lg":["Jost", "sans-serif"],"price-md":["Jost", "sans-serif"],"headline-lg":["Cormorant Garamond", "serif"],"body-md":["Jost", "sans-serif"],"label-caps":["Jost", "sans-serif"],"body-lg":["Jost", "sans-serif"],"display-hero":["Cormorant Garamond", "serif"],"display-hero-mobile":["Cormorant Garamond", "serif"],"headline-md":["Cormorant Garamond", "serif"],"headline-lg-mobile":["Cormorant Garamond", "serif"]},fontSize:{"headline-sm":["22px",{lineHeight:"30px",letterSpacing:"0.01em",fontWeight:"500"}],"label-sm":["12px",{lineHeight:"16px",letterSpacing:"0.04em",fontWeight:"500"}],"title-editorial":["16px",{lineHeight:"24px",letterSpacing:"0.12em",fontWeight:"600"}],"body-sm":["13px",{lineHeight:"20px",fontWeight:"400"}],"price-lg":["18px",{lineHeight:"24px",letterSpacing:"0.02em",fontWeight:"600"}],"price-md":["15px",{lineHeight:"20px",letterSpacing:"0.02em",fontWeight:"600"}],"headline-lg":["40px",{lineHeight:"48px",letterSpacing:"-0.01em",fontWeight:"400"}],"body-md":["15px",{lineHeight:"24px",fontWeight:"400"}],"label-caps":["11px",{lineHeight:"14px",letterSpacing:"0.18em",fontWeight:"600"}],"body-lg":["18px",{lineHeight:"28px",fontWeight:"300"}],"display-hero":["56px",{lineHeight:"64px",letterSpacing:"-0.02em",fontWeight:"400"}],"display-hero-mobile":["36px",{lineHeight:"44px",letterSpacing:"-0.01em",fontWeight:"400"}],"headline-md":["28px",{lineHeight:"36px",letterSpacing:"0em",fontWeight:"500"}],"headline-lg-mobile":["28px",{lineHeight:"36px",letterSpacing:"0em",fontWeight:"400"}]}}}};
+  // Filter Chips Logic
+  function removeFilterChip(btn) {
+    const chip = btn.closest('.filter-chip');
+    if (chip) {
+      chip.remove();
+      const remaining = document.querySelectorAll('.filter-chip').length;
+      showToast(`Filter removed (${remaining} filters active)`, { icon: 'tune' });
+      const badge = document.querySelector('#toggleFilterBtn span:last-child');
+      if (badge) badge.textContent = remaining;
+    }
+  }
+
+  function clearAllFilters() {
+    document.querySelectorAll('.filter-chip').forEach(c => c.remove());
+    showToast('All filters cleared', { icon: 'refresh' });
+    const badge = document.querySelector('#toggleFilterBtn span:last-child');
+    if (badge) badge.textContent = '0';
+    document.querySelectorAll('.sidebar-size-btn').forEach(b => {
+      b.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+      b.classList.add('bg-surface', 'text-on-surface');
+    });
+  }
+
+  function selectSidebarSize(btn) {
+    document.querySelectorAll('.sidebar-size-btn').forEach(b => {
+      b.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+      b.classList.add('bg-surface', 'text-on-surface');
+    });
+    btn.classList.add('bg-primary', 'text-on-primary', 'shadow-sm');
+    btn.classList.remove('bg-surface', 'text-on-surface');
+    showToast(`Filter applied: Size ${btn.textContent.trim()}`, { icon: 'tune' });
+  }
+
+  function selectSidebarColor(btn, colorName) {
+    document.querySelectorAll('[title]').forEach(b => b.classList.remove('ring-2', 'ring-primary'));
+    btn.classList.add('ring-2', 'ring-primary');
+    showToast(`Filter applied: Tone ${colorName}`, { icon: 'palette' });
+  }
+
+  function updatePriceSlider(val) {
+    const label = document.getElementById('maxPriceLabel');
+    if (label) label.textContent = `Max: ₨ ${parseInt(val).toLocaleString()}`;
+  }
+
+  function sortProducts(sortBy) {
+    showToast(`Sorted by: ${sortBy.replace('-', ' ').toUpperCase()}`, { icon: 'sort' });
+  }
+
+  function goToPage(pageNo, btn) {
+    document.querySelectorAll('.pagination-btn').forEach(b => {
+      b.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+      b.classList.add('bg-surface', 'text-on-surface');
+    });
+    btn.classList.add('bg-primary', 'text-on-primary', 'shadow-sm');
+    btn.classList.remove('bg-surface', 'text-on-surface');
+    showToast(`Navigated to page ${pageNo}`, { icon: 'auto_stories' });
+    window.scrollTo({ top: 300, behavior: 'smooth' });
+  }
+
+</script>
+<script src="site.js" defer></script>
+<script src="search.js" defer></script>
+<script>// Filter Chips Logic
+  function removeFilterChip(btn) {
+    const chip = btn.closest('.filter-chip');
+    if (chip) {
+      chip.remove();
+      const remaining = document.querySelectorAll('.filter-chip').length;
+      showToast(`Filter removed (${remaining} filters active)`, { icon: 'tune' });
+      const badge = document.querySelector('#toggleFilterBtn span:last-child');
+      if (badge) badge.textContent = remaining;
+    }
+  }
+
+  function clearAllFilters() {
+    document.querySelectorAll('.filter-chip').forEach(c => c.remove());
+    showToast('All filters cleared', { icon: 'refresh' });
+    const badge = document.querySelector('#toggleFilterBtn span:last-child');
+    if (badge) badge.textContent = '0';
+    document.querySelectorAll('.sidebar-size-btn').forEach(b => {
+      b.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+      b.classList.add('bg-surface', 'text-on-surface');
+    });
+  }
+
+  function selectSidebarSize(btn) {
+    document.querySelectorAll('.sidebar-size-btn').forEach(b => {
+      b.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+      b.classList.add('bg-surface', 'text-on-surface');
+    });
+    btn.classList.add('bg-primary', 'text-on-primary', 'shadow-sm');
+    btn.classList.remove('bg-surface', 'text-on-surface');
+    showToast(`Filter applied: Size ${btn.textContent.trim()}`, { icon: 'tune' });
+  }
+
+  function selectSidebarColor(btn, colorName) {
+    document.querySelectorAll('[title]').forEach(b => b.classList.remove('ring-2', 'ring-primary'));
+    btn.classList.add('ring-2', 'ring-primary');
+    showToast(`Filter applied: Tone ${colorName}`, { icon: 'palette' });
+  }
+
+  function updatePriceSlider(val) {
+    const label = document.getElementById('maxPriceLabel');
+    if (label) label.textContent = `Max: ₨ ${parseInt(val).toLocaleString()}`;
+  }
+
+  function sortProducts(sortBy) {
+    showToast(`Sorted by: ${sortBy.replace('-', ' ').toUpperCase()}`, { icon: 'sort' });
+  }
+
+  function goToPage(pageNo, btn) {
+    document.querySelectorAll('.pagination-btn').forEach(b => {
+      b.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+      b.classList.add('bg-surface', 'text-on-surface');
+    });
+    btn.classList.add('bg-primary', 'text-on-primary', 'shadow-sm');
+    btn.classList.remove('bg-surface', 'text-on-surface');
+    showToast(`Navigated to page ${pageNo}`, { icon: 'auto_stories' });
+    window.scrollTo({ top: 300, behavior: 'smooth' });
+  }
+
+</script>
+<link rel="stylesheet" href="luxury-theme.css"/>
+</head><body class="bg-surface font-body-md text-on-surface antialiased selection:bg-secondary-fixed selection:text-on-secondary-fixed"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/95 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+  <div class="w-full bg-tertiary-fixed/60 py-space-xs px-4 text-center text-on-tertiary-fixed">
+    <p class="font-label-caps text-label-caps uppercase tracking-widest text-[10px] sm:text-label-caps truncate sm:overflow-visible">
+      New Season Collection — Complimentary Nationwide Shipping across Pakistan | Cash on Delivery Available
+    </p>
+  </div>
+  <div class="h-20 max-w-[1440px] mx-auto px-4 sm:px-margin flex items-center justify-between">
+    <div class="flex items-center gap-3 lg:gap-space-lg">
+      <button id="mobileMenuBtn" aria-label="Open navigation menu" class="lg:hidden p-2 text-on-surface hover:text-secondary rounded-lg focus:outline-none transition-colors">
+        <span class="material-symbols-outlined text-[26px]">menu</span>
+      </button>
+      <a class="flex items-center group py-1" data-path="home" href="index.html">
+        <span class="font-title-editorial text-[20px] sm:text-[22px] tracking-[0.24em] uppercase text-on-surface font-bold group-hover:text-secondary transition-colors">LUXE LANE</span>
+      </a>
+      <nav class="hidden lg:flex items-center gap-1">
+        <a class="px-2.5 py-1 rounded text-[10.5px] font-label-caps uppercase tracking-[0.14em] text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-medium" data-path="home" href="index.html">Home</a>
+        <a aria-current="page" class="px-2.5 py-1 rounded text-[10.5px] font-label-caps uppercase tracking-[0.14em] transition-colors bg-primary text-on-primary font-semibold" data-path="women" href="shop.html">Women</a>
+        <a class="px-2.5 py-1 rounded text-[10.5px] font-label-caps uppercase tracking-[0.14em] text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-medium" data-path="men" href="shop.html">Men</a>
+        <a class="px-2.5 py-1 rounded text-[10.5px] font-label-caps uppercase tracking-[0.14em] text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-medium" data-path="new-arrivals" href="shop.html">New Arrivals</a>
+        <a class="px-2.5 py-1 rounded text-[10.5px] font-label-caps uppercase tracking-[0.14em] text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-medium" data-path="eastern-wear" href="shop.html">Eastern Wear</a>
+        <a class="px-2.5 py-1 rounded text-[10.5px] font-label-caps uppercase tracking-[0.14em] text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-medium" data-path="western-wear" href="shop.html">Western Wear</a>
+        <a class="px-2.5 py-1 rounded text-[10.5px] font-label-caps uppercase tracking-[0.14em] text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-medium" data-path="sale" href="shop.html">Sale</a>
+        <a class="px-2.5 py-1 rounded text-[10.5px] font-label-caps uppercase tracking-[0.14em] text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-medium" data-path="contact" href="contact.html">Contact Us</a>
+      </nav>
+    </div>
+    <div class="flex items-center gap-1 sm:gap-space-md">
+      <div class="hidden md:flex items-center bg-surface-container-low px-space-sm py-1 rounded-full text-on-surface-variant focus-within:ring-1 focus-within:ring-secondary/50 transition-all">
+        <span class="material-symbols-outlined text-[18px] mr-1">search</span>
+        <input id="headerSearchInput" class="bg-transparent border-none text-body-sm font-body-sm text-on-surface focus:outline-none w-36 lg:w-44 placeholder:text-on-surface-variant/70" placeholder="Search pret, bridal, silk..." type="text"/>
+      </div>
+      <button id="mobileSearchBtn" aria-label="Search" class="md:hidden p-2 text-on-surface hover:text-secondary transition-colors">
+        <span class="material-symbols-outlined text-[22px]">search</span>
+      </button>
+      <div class="relative hidden sm:inline-block">
+        <button id="currencyBtn" class="flex items-center gap-1 px-space-xs py-1 text-on-surface font-label-caps text-label-caps tracking-wider uppercase hover:text-secondary transition-colors">
+          <span id="currentCurrencyLabel" class="text-secondary font-semibold">PKR ₨</span>
+          <span class="material-symbols-outlined text-[16px] text-on-surface-variant">expand_more</span>
+        </button>
+        <div id="currencyDropdown" class="hidden absolute right-0 mt-2 w-32 bg-surface-container-lowest rounded-lg shadow-xl py-1 z-50 border border-outline-variant/20">
+          <button onclick="setCurrency('PKR', '₨')" class="w-full text-left px-3 py-1.5 text-xs font-semibold hover:bg-surface-container text-on-surface flex justify-between"><span>PKR</span><span>₨</span></button>
+          <button onclick="setCurrency('USD', '$')" class="w-full text-left px-3 py-1.5 text-xs font-semibold hover:bg-surface-container text-on-surface flex justify-between"><span>USD</span><span>$</span></button>
+          <button onclick="setCurrency('AED', 'د.إ')" class="w-full text-left px-3 py-1.5 text-xs font-semibold hover:bg-surface-container text-on-surface flex justify-between"><span>AED</span><span>د.إ</span></button>
+          <button onclick="setCurrency('GBP', '£')" class="w-full text-left px-3 py-1.5 text-xs font-semibold hover:bg-surface-container text-on-surface flex justify-between"><span>GBP</span><span>£</span></button>
+        </div>
+      </div>
+      <a aria-label="Wishlist" class="relative p-2 text-on-surface hover:text-secondary transition-colors" data-path="wishlist" href="shop.html?filter=wishlist">
+        <span class="material-symbols-outlined text-[22px]">favorite</span>
+        <span id="headerWishlistBadge" class="absolute top-1 right-1 h-4 w-4 bg-primary text-on-primary font-label-sm text-[9px] flex items-center justify-center rounded-full">2</span>
+      </a>
+      <a aria-label="Cart" class="relative p-2 text-on-surface hover:text-secondary transition-colors cursor-pointer" data-path="shopping-bag" href="javascript:void(0)" onclick="openCartDrawer()">
+        <span class="material-symbols-outlined text-[22px]">shopping_bag</span>
+        <span id="headerCartBadge" class="absolute top-1 right-1 h-4 w-4 bg-secondary text-on-secondary font-label-sm text-[9px] flex items-center justify-center rounded-full">3</span>
+      </a>
+      <div class="flex items-center pl-1 sm:pl-space-xs">
+        <a aria-label="Account" class="p-0.5 rounded-full hover:ring-2 hover:ring-secondary transition-all" data-path="account" href="javascript:void(0)" onclick="openAccountModal()">
+          <img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjMu90Dj8NmF2DySz8uK2NSdVm5j9lKGm-U1QKOCRWaGCSu7LvMJAd_19fPfPRB6tYIMSt_h6nXRqM60PhXWxIeQb44aQVOhQ5idutpa57Wh1nBt7OUG986mSz0laKz-G-1cUOu6EG8KO2iQ_gPeH05KBtcZ75M6ud764ZejkS7uGorHgLPNlT4r1CYOAphdTLSmF7o4e30iBa8BkKijSpsYH9i6YQ_Zqs9JegKPnqusYLGS9mfvSq"/>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Navigation Drawer -->
+<div id="mobileDrawerBackdrop" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden transition-opacity duration-300 opacity-0"></div>
+<div id="mobileDrawer" class="fixed top-0 left-0 bottom-0 w-[85%] max-w-sm bg-surface-container-lowest z-50 transform -translate-x-full transition-transform duration-300 ease-in-out shadow-2xl flex flex-col justify-between overflow-y-auto">
+  <div>
+    <div class="p-5 flex items-center justify-between border-b border-outline-variant/30 bg-surface">
+      <div class="flex items-center">
+        <span class="font-title-editorial text-[19px] tracking-[0.24em] uppercase text-on-surface font-bold">LUXE LANE</span>
+      </div>
+      <button id="closeMobileDrawerBtn" aria-label="Close menu" class="p-2 text-on-surface-variant hover:text-on-surface rounded-full">
+        <span class="material-symbols-outlined text-[24px]">close</span>
+      </button>
+    </div>
+    <div class="p-4 border-b border-outline-variant/20">
+      <div class="flex items-center bg-surface-container-low px-3 py-2.5 rounded-lg text-on-surface-variant">
+        <span class="material-symbols-outlined text-[20px] mr-2">search</span>
+        <input id="mobileSearchInput" class="bg-transparent border-none text-body-sm text-on-surface focus:outline-none w-full" placeholder="Search pret, bridal, silk..." type="text"/>
+      </div>
+    </div>
+    <nav class="p-4 space-y-1">
+      <a href="index.html" class="flex items-center justify-between px-3 py-3 rounded-lg text-on-surface hover:bg-surface-container font-semibold"><span>Home</span><span class="material-symbols-outlined text-[18px]">chevron_right</span></a>
+      <a href="shop.html" class="flex items-center justify-between px-3 py-3 rounded-lg text-on-surface hover:bg-surface-container font-semibold"><span>Women Pret</span><span class="material-symbols-outlined text-[18px]">chevron_right</span></a>
+      <a href="shop.html" class="flex items-center justify-between px-3 py-3 rounded-lg text-on-surface hover:bg-surface-container"><span>Men Tailoring</span><span class="material-symbols-outlined text-[18px]">chevron_right</span></a>
+      <a href="shop.html" class="flex items-center justify-between px-3 py-3 rounded-lg text-on-surface hover:bg-surface-container"><span>New Arrivals</span><span class="bg-secondary-fixed text-on-secondary-fixed text-[10px] px-2 py-0.5 rounded font-bold uppercase">NEW</span></a>
+      <a href="shop.html" class="flex items-center justify-between px-3 py-3 rounded-lg text-on-surface hover:bg-surface-container"><span>Eastern Wear</span><span class="material-symbols-outlined text-[18px]">chevron_right</span></a>
+      <a href="shop.html" class="flex items-center justify-between px-3 py-3 rounded-lg text-on-surface hover:bg-surface-container"><span>Western Wear</span><span class="material-symbols-outlined text-[18px]">chevron_right</span></a>
+      <a href="shop.html" class="flex items-center justify-between px-3 py-3 rounded-lg text-error hover:bg-error-container/30 font-semibold"><span>Festive Sale</span><span class="bg-error text-on-error text-[10px] px-2 py-0.5 rounded font-bold uppercase">UP TO 30%</span></a>
+    </nav>
+  </div>
+  <div class="p-4 border-t border-outline-variant/30 bg-surface-container-low space-y-3">
+    <div class="flex items-center justify-between">
+      <span class="text-xs uppercase font-semibold text-on-surface-variant">Currency</span>
+      <select onchange="setCurrency(this.value, this.options[this.selectedIndex].text.split(' ')[1])" class="bg-surface border border-outline-variant/40 rounded px-2 py-1 text-xs font-semibold text-on-surface">
+        <option value="PKR">PKR ₨</option>
+        <option value="USD">USD $</option>
+        <option value="AED">AED د.إ</option>
+        <option value="GBP">GBP £</option>
+      </select>
+    </div>
+    <div class="flex gap-2">
+      <button onclick="toggleMobileDrawer(false); openAtelierModal();" class="flex-1 py-2.5 px-3 bg-surface-container text-on-surface font-label-caps text-[11px] uppercase tracking-wider rounded border border-outline-variant/30 text-center font-semibold">
+        Book Atelier
+      </button>
+      <a href="javascript:void(0)" onclick="toggleMobileDrawer(false); openCartDrawer();" class="flex-1 py-2.5 px-3 bg-primary text-on-primary font-label-caps text-[11px] uppercase tracking-wider rounded text-center font-semibold flex items-center justify-center gap-1 cursor-pointer">
+        <span class="material-symbols-outlined text-[16px]">shopping_bag</span> Bag (<span class="cart-badge">3</span>)
+      </a>
+    </div>
+  </div>
+</div><main class="w-full pt-20 bg-surface min-h-[calc(100vh-80px)]"><div class="flex flex-col w-full">
+<!-- Editorial Campaign Banner Sub-Header -->
+<section class="w-full bg-surface-container-low px-margin-mobile md:px-margin py-space-lg relative overflow-hidden">
+<div class="max-w-[1440px] mx-auto flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div class="flex flex-col max-w-2xl">
+<!-- Breadcrumb Hierarchy -->
+<nav aria-label="Breadcrumb" class="flex items-center gap-space-xs text-on-surface-variant mb-space-sm">
+<a class="font-label-caps text-label-caps uppercase hover:text-on-surface transition-colors" href="index.html">Home</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<a class="font-label-caps text-label-caps uppercase hover:text-on-surface transition-colors" href="#">Women</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="font-label-caps text-label-caps uppercase text-secondary font-semibold">All Ready-To-Wear</span>
+</nav>
+<p class="font-label-caps text-label-caps uppercase tracking-[0.25em] text-secondary font-semibold mb-space-xs">Couture • Pret-a-Porter</p>
+<h1 class="font-display-hero text-headline-lg md:text-display-hero text-on-surface tracking-tight mb-space-xs">The Women's Ready-to-Wear Collection</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xl leading-relaxed">
+          Timeless silhouettes sculpted with heirloom Pakistani craftsmanship, pure chiffons, raw silks, and contemporary tailoring. Designed for effortless grace from Karachi galas to transatlantic evenings.
+        </p>
+</div>
+<!-- Quick Metrics & Context Stamp -->
+<div class="flex flex-wrap md:flex-col items-start md:items-end justify-between gap-space-xs border-t md:border-t-0 pt-space-xs md:pt-0">
+<div class="flex items-center gap-space-xs bg-surface-container px-space-sm py-1 rounded-full shadow-sm">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold tracking-wide">TCS 48-Hour Despatch</span>
+</div>
+<p class="font-label-caps text-label-caps uppercase text-on-surface-variant text-[10px]">Currency: Pakistani Rupee (PKR • ₨)</p>
+</div>
+</div>
+<!-- Active Filter Chips Row -->
+<div id="activeChipsRow" class="max-w-[1440px] mx-auto mt-space-md pt-space-sm flex flex-wrap items-center gap-space-xs">
+  <span class="font-label-caps text-label-caps text-on-surface-variant uppercase font-semibold mr-space-xs">Applied Filters:</span>
+  <div class="filter-chip inline-flex items-center gap-1.5 bg-surface-container-highest px-space-sm py-1 rounded-full shadow-sm text-on-surface">
+    <span class="font-label-sm text-label-sm font-medium">In Stock</span>
+    <button onclick="removeFilterChip(this)" aria-label="Remove filter" class="hover:text-secondary flex items-center"><span class="material-symbols-outlined text-[14px]">close</span></button>
+  </div>
+  <div class="filter-chip inline-flex items-center gap-1.5 bg-surface-container-highest px-space-sm py-1 rounded-full shadow-sm text-on-surface">
+    <span class="font-label-sm text-label-sm font-medium">Eastern Wear</span>
+    <button onclick="removeFilterChip(this)" aria-label="Remove filter" class="hover:text-secondary flex items-center"><span class="material-symbols-outlined text-[14px]">close</span></button>
+  </div>
+  <div class="filter-chip inline-flex items-center gap-1.5 bg-surface-container-highest px-space-sm py-1 rounded-full shadow-sm text-on-surface">
+    <span class="font-label-sm text-label-sm font-medium">Size: M</span>
+    <button onclick="removeFilterChip(this)" aria-label="Remove filter" class="hover:text-secondary flex items-center"><span class="material-symbols-outlined text-[14px]">close</span></button>
+  </div>
+  <button onclick="clearAllFilters()" class="font-label-caps text-label-caps uppercase text-secondary hover:text-on-surface font-semibold underline underline-offset-4 ml-space-xs transition-colors">
+    Clear All
+  </button>
+</div>
+</section>
+<!-- Interactive Filter Bar (Sticky top under main nav) -->
+<section class="sticky top-20 z-40 bg-surface/95 backdrop-blur-md shadow-sm py-space-sm px-margin-mobile md:px-margin">
+<div class="max-w-[1440px] mx-auto flex items-center justify-between gap-space-md">
+<!-- Filter Sidebar Toggle & Count -->
+<div class="flex items-center gap-space-md">
+<button class="flex items-center gap-space-xs px-space-sm py-2 bg-surface-container hover:bg-surface-container-high rounded-full transition-all text-on-surface font-label-caps text-label-caps uppercase font-semibold" id="toggleFilterBtn">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+<span>Filters</span>
+<span class="bg-primary text-on-primary w-4 h-4 rounded-full text-[10px] flex items-center justify-center ml-0.5">3</span>
+</button>
+<div class="h-4 w-[1px] bg-outline-variant hidden sm:block"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium hidden sm:inline">
+          Displaying <strong class="text-on-surface font-semibold">48</strong> curated pieces
+        </span>
+</div>
+<!-- Controls: Grid Density & Sort -->
+<div class="flex items-center gap-space-md">
+<!-- Layout Density Toggle (Desktop Only) -->
+<div class="hidden lg:flex items-center bg-surface-container p-0.5 rounded-full shadow-sm">
+<button aria-label="3 Columns View" class="p-1.5 rounded-full text-on-surface-variant hover:text-on-surface transition-colors" id="btnGrid3">
+<span class="material-symbols-outlined text-[18px]">view_column</span>
+</button>
+<button aria-label="4 Columns View" class="p-1.5 rounded-full bg-surface text-on-surface shadow-sm" id="btnGrid4">
+<span class="material-symbols-outlined text-[18px]">grid_view</span>
+</button>
+</div>
+<!-- Custom Styled Sort Dropdown -->
+<div class="relative inline-block text-left">
+<div class="flex items-center gap-2 bg-surface-container-low px-space-sm py-2 rounded-full shadow-sm">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant hidden md:inline">Sort:</span>
+<select id="sortSelect" onchange="sortProducts(this.value)" class="bg-transparent font-label-caps text-label-caps text-on-surface uppercase font-semibold focus:outline-none cursor-pointer pr-space-xs">
+<option selected="" value="featured">Curated / Featured</option>
+<option value="new">Newest Arrivals</option>
+<option value="price-asc">Price: Low to High</option>
+<option value="price-desc">Price: High to Low</option>
+<option value="rating">Best Rated</option>
+</select>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Canvas: Two-Column Lookbook Structure -->
+<div class="max-w-[1440px] mx-auto w-full px-margin-mobile md:px-margin py-space-xl flex gap-gutter">
+<!-- LEFT SIDEBAR FILTER RAIL (Sticky) -->
+<aside class="w-72 shrink-0 hidden xl:flex flex-col gap-space-lg self-start sticky top-36" id="filterSidebar">
+<!-- Filter Card Container -->
+<div class="bg-surface-container-low p-space-lg rounded-xl shadow-sm space-y-space-lg">
+<!-- Category Filter -->
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<h3 class="font-title-editorial text-title-editorial text-on-surface tracking-wider uppercase font-semibold">Couture Categories</h3>
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">unfold_more</span>
+</div>
+<ul class="space-y-space-xs font-body-sm text-body-sm">
+<li class="flex items-center justify-between text-on-surface font-semibold cursor-pointer py-1">
+<span class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> All Silhouettes
+              </span>
+<span class="font-label-sm text-on-surface-variant text-[11px]">48</span>
+</li>
+<li class="flex items-center justify-between text-on-surface-variant hover:text-on-surface cursor-pointer py-1 transition-colors">
+<span>Eastern Pret</span>
+<span class="font-label-sm text-on-surface-variant text-[11px]">24</span>
+</li>
+<li class="flex items-center justify-between text-on-surface-variant hover:text-on-surface cursor-pointer py-1 transition-colors">
+<span>Western Tailoring</span>
+<span class="font-label-sm text-on-surface-variant text-[11px]">16</span>
+</li>
+<li class="flex items-center justify-between text-on-surface-variant hover:text-on-surface cursor-pointer py-1 transition-colors">
+<span>Formal &amp; Festive</span>
+<span class="font-label-sm text-on-surface-variant text-[11px]">8</span>
+</li>
+</ul>
+</div>
+<div class="h-[1px] bg-surface-container-high w-full"></div>
+<!-- Fabric Composition -->
+<div>
+<h3 class="font-title-editorial text-title-editorial text-on-surface tracking-wider uppercase font-semibold mb-space-sm">Fabric Origin</h3>
+<div class="flex flex-col gap-space-xs">
+<label class="flex items-center gap-space-xs text-body-sm text-on-surface-variant hover:text-on-surface cursor-pointer">
+<input checked="" class="w-4 h-4 rounded accent-primary cursor-pointer" type="checkbox"/>
+<span class="flex-1">Pure Raw Silk (60g)</span>
+<span class="text-[11px] text-on-surface-variant">18</span>
+</label>
+<label class="flex items-center gap-space-xs text-body-sm text-on-surface-variant hover:text-on-surface cursor-pointer">
+<input class="w-4 h-4 rounded accent-primary cursor-pointer" type="checkbox"/>
+<span class="flex-1">Chiffon &amp; Organza</span>
+<span class="text-[11px] text-on-surface-variant">14</span>
+</label>
+<label class="flex items-center gap-space-xs text-body-sm text-on-surface-variant hover:text-on-surface cursor-pointer">
+<input class="w-4 h-4 rounded accent-primary cursor-pointer" type="checkbox"/>
+<span class="flex-1">Lawn &amp; Handloom Cotton</span>
+<span class="text-[11px] text-on-surface-variant">9</span>
+</label>
+<label class="flex items-center gap-space-xs text-body-sm text-on-surface-variant hover:text-on-surface cursor-pointer">
+<input class="w-4 h-4 rounded accent-primary cursor-pointer" type="checkbox"/>
+<span class="flex-1">Micro Velvet (Autumn Drop)</span>
+<span class="text-[11px] text-on-surface-variant">4</span>
+</label>
+<label class="flex items-center gap-space-xs text-body-sm text-on-surface-variant hover:text-on-surface cursor-pointer">
+<input class="w-4 h-4 rounded accent-primary cursor-pointer" type="checkbox"/>
+<span class="flex-1">Pure French Linen</span>
+<span class="text-[11px] text-on-surface-variant">3</span>
+</label>
+</div>
+</div>
+<div class="h-[1px] bg-surface-container-high w-full"></div>
+<!-- Sizing Grid Selector -->
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<h3 class="font-title-editorial text-title-editorial text-on-surface tracking-wider uppercase font-semibold">Sizing</h3>
+<a class="font-label-caps text-label-caps text-secondary underline hover:text-on-surface" href="#">Size Chart</a>
+</div>
+<div class="grid grid-cols-3 gap-2">
+<button onclick="selectSidebarSize(this)" class="sidebar-size-btn py-2 text-center rounded bg-surface hover:bg-surface-container-high text-body-sm text-on-surface transition-all font-medium">XS</button>
+<button onclick="selectSidebarSize(this)" class="sidebar-size-btn py-2 text-center rounded bg-surface hover:bg-surface-container-high text-body-sm text-on-surface transition-all font-medium">S</button>
+<button onclick="selectSidebarSize(this)" class="sidebar-size-btn py-2 text-center rounded bg-primary text-on-primary font-semibold shadow-sm">M</button>
+<button onclick="selectSidebarSize(this)" class="sidebar-size-btn py-2 text-center rounded bg-surface hover:bg-surface-container-high text-body-sm text-on-surface transition-all font-medium">L</button>
+<button onclick="selectSidebarSize(this)" class="sidebar-size-btn py-2 text-center rounded bg-surface hover:bg-surface-container-high text-body-sm text-on-surface transition-all font-medium">XL</button>
+<button class="py-2 text-center rounded bg-secondary-container text-on-secondary-container font-semibold hover:bg-secondary-fixed transition-all text-label-caps">Bespoke</button>
+</div>
+</div>
+<div class="h-[1px] bg-surface-container-high w-full"></div>
+<!-- Color Palette -->
+<div>
+<h3 class="font-title-editorial text-title-editorial text-on-surface tracking-wider uppercase font-semibold mb-space-sm">Tonal Palette</h3>
+<div class="flex items-center gap-2.5">
+<button class="w-7 h-7 rounded-full bg-[#FAF7F2] shadow-sm ring-2 ring-primary relative flex items-center justify-center" title="Ivory Raw Silk">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+</button>
+<button class="w-7 h-7 rounded-full bg-[#E5D7C5] shadow-sm hover:scale-110 transition-transform cursor-pointer" onclick="selectSidebarColor(this, \'Sand Beige\')" title="Sand Beige"></button>
+<button class="w-7 h-7 rounded-full bg-[#D4A396] shadow-sm hover:scale-110 transition-transform cursor-pointer" onclick="selectSidebarColor(this, \'Dusty Rose\')" title="Dusty Rose"></button>
+<button class="w-7 h-7 rounded-full bg-[#1A382B] shadow-sm hover:scale-110 transition-transform cursor-pointer" onclick="selectSidebarColor(this, \'Emerald Noir\')" title="Emerald Noir"></button>
+<button class="w-7 h-7 rounded-full bg-[#1C1B1A] shadow-sm hover:scale-110 transition-transform cursor-pointer" onclick="selectSidebarColor(this, \'Obsidian Noir\')" title="Obsidian Noir"></button>
+</div>
+</div>
+<div class="h-[1px] bg-surface-container-high w-full"></div>
+<!-- Price Range Slider -->
+<div>
+<div class="flex items-center justify-between mb-space-xs">
+<h3 class="font-title-editorial text-title-editorial text-on-surface tracking-wider uppercase font-semibold">Price Range</h3>
+<span class="font-label-caps text-label-caps text-secondary font-semibold">PKR (₨)</span>
+</div>
+<div class="py-2">
+<input id="priceSlider" oninput="updatePriceSlider(this.value)" class="w-full h-1.5 bg-surface-container-highest rounded-lg appearance-none cursor-pointer accent-primary" max="65000" min="10000" type="range" value="65000"/>
+</div>
+<div class="flex items-center justify-between text-label-sm font-label-sm text-on-surface-variant font-medium mt-1">
+<span>₨ 10,000</span>
+<span id="maxPriceLabel" class="text-on-surface font-semibold">Max: ₨ 65,000</span>
+</div>
+</div>
+<div class="h-[1px] bg-surface-container-high w-full"></div>
+<!-- Availability Status -->
+<div>
+<h3 class="font-title-editorial text-title-editorial text-on-surface tracking-wider uppercase font-semibold mb-space-sm">Availability</h3>
+<div class="space-y-space-xs">
+<label class="flex items-center gap-space-xs text-body-sm text-on-surface cursor-pointer">
+<input checked="" class="w-4 h-4 accent-primary cursor-pointer" name="availability" type="radio"/>
+<span>Ready-to-Ship (Dispatched 48h)</span>
+</label>
+<label class="flex items-center gap-space-xs text-body-sm text-on-surface-variant hover:text-on-surface cursor-pointer">
+<input class="w-4 h-4 accent-primary cursor-pointer" name="availability" type="radio"/>
+<span>Atelier Pre-Order (12-14 Days)</span>
+</label>
+</div>
+</div>
+</div>
+<!-- Atelier Heritage Badge -->
+<div class="bg-tertiary-fixed/40 p-space-md rounded-xl text-on-tertiary-fixed shadow-sm flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[28px] text-secondary">verified_user</span>
+<div>
+<p class="font-title-editorial text-[14px] leading-tight font-semibold">Heirloom Guarantee</p>
+<p class="font-body-sm text-[12px] leading-snug opacity-80">Each silk garment includes an artisan guild authentication certificate.</p>
+</div>
+</div>
+</aside>
+<!-- RIGHT PRODUCT CATALOG GRID -->
+<main class="flex-1 min-w-0">
+
+<!-- ======== SAPPHIRE-STYLE: COLLECTION TABS + FILTER/SORT BAR ======== -->
+
+<!-- Collection Category Tabs (Horizontal Scrollable) -->
+<div class="w-full bg-surface border-b border-outline-variant sticky top-20 z-20">
+  <div class="flex items-center overflow-x-auto scrollbar-hide px-0">
+    <button onclick="setActiveTab(this, 'all')" id="tab-all"
+      class="collection-tab active-tab whitespace-nowrap px-5 py-3.5 font-label-caps text-label-caps uppercase tracking-widest text-on-surface border-b-2 border-primary font-semibold transition-all duration-200">
+      All
+    </button>
+    <span class="text-outline-variant mx-1 text-lg select-none">|</span>
+    <button onclick="setActiveTab(this, 'naye-rang')" id="tab-naye-rang"
+      class="collection-tab whitespace-nowrap px-5 py-3.5 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant border-b-2 border-transparent hover:text-on-surface hover:border-outline transition-all duration-200">
+      Naye Rang
+    </button>
+    <span class="text-outline-variant mx-1 text-lg select-none">|</span>
+    <button onclick="setActiveTab(this, 'jashn')" id="tab-jashn"
+      class="collection-tab whitespace-nowrap px-5 py-3.5 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant border-b-2 border-transparent hover:text-on-surface hover:border-outline transition-all duration-200">
+      Jashn-e-Bahar
+    </button>
+    <span class="text-outline-variant mx-1 text-lg select-none">|</span>
+    <button onclick="setActiveTab(this, 'silk')" id="tab-silk"
+      class="collection-tab whitespace-nowrap px-5 py-3.5 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant border-b-2 border-transparent hover:text-on-surface hover:border-outline transition-all duration-200">
+      Pure Silk Edit
+    </button>
+    <span class="text-outline-variant mx-1 text-lg select-none">|</span>
+    <button onclick="setActiveTab(this, 'luxe')" id="tab-luxe"
+      class="collection-tab whitespace-nowrap px-5 py-3.5 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant border-b-2 border-transparent hover:text-on-surface hover:border-outline transition-all duration-200">
+      Luxe Bridal
+    </button>
+    <span class="text-outline-variant mx-1 text-lg select-none">|</span>
+    <button onclick="setActiveTab(this, 'pret')" id="tab-pret"
+      class="collection-tab whitespace-nowrap px-5 py-3.5 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant border-b-2 border-transparent hover:text-on-surface hover:border-outline transition-all duration-200">
+      Everyday Pret
+    </button>
+  </div>
+</div>
+
+<!-- Filter + Sort Bar (Sapphire-style) -->
+<div class="flex items-center justify-between px-0 py-3 border-b border-outline-variant bg-surface mb-2">
+
+  <!-- Left: FILTER + -->
+  <button onclick="toggleMobileFilter()" 
+    class="flex items-center gap-1.5 font-label-caps text-label-caps uppercase tracking-widest text-on-surface font-semibold hover:text-secondary transition-colors px-1">
+    <span class="material-symbols-outlined text-[18px]">tune</span>
+    FILTER +
+  </button>
+
+  <!-- Center: Grid View Toggle -->
+  <div class="flex items-center gap-1.5">
+    <!-- 1-col view -->
+    <button onclick="setGridView(1, this)" title="Single column"
+      class="grid-view-btn p-1.5 rounded hover:bg-surface-container transition-colors text-on-surface-variant hover:text-on-surface">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+        <rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+      </svg>
+    </button>
+    <!-- 2-col view (active) -->
+    <button onclick="setGridView(2, this)" title="Two columns"
+      class="grid-view-btn p-1.5 rounded bg-surface-container text-on-surface transition-colors active-grid-view">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="8" height="18" rx="1.5"/>
+        <rect x="13" y="3" width="8" height="18" rx="1.5"/>
+      </svg>
+    </button>
+    <!-- 3-col view -->
+    <button onclick="setGridView(3, this)" title="Three columns"
+      class="grid-view-btn p-1.5 rounded hover:bg-surface-container transition-colors text-on-surface-variant hover:text-on-surface">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="2" y="3" width="6" height="18" rx="1.5"/>
+        <rect x="9" y="3" width="6" height="18" rx="1.5"/>
+        <rect x="16" y="3" width="6" height="18" rx="1.5"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Right: SORT + -->
+  <div class="relative">
+    <button onclick="toggleSortDropdown()" 
+      class="flex items-center gap-1.5 font-label-caps text-label-caps uppercase tracking-widest text-on-surface font-semibold hover:text-secondary transition-colors px-1">
+      SORT +
+      <span class="material-symbols-outlined text-[18px]">keyboard_arrow_down</span>
+    </button>
+    <!-- Sort Dropdown -->
+    <div id="sortDropdown" class="hidden absolute right-0 top-full mt-1 w-52 bg-surface border border-outline-variant rounded-lg shadow-xl z-30 overflow-hidden">
+      <button onclick="applySortOption('new-in', this)" class="sort-option w-full text-left px-4 py-3 font-label-caps text-label-caps uppercase tracking-wider text-on-surface hover:bg-surface-container transition-colors font-semibold">
+        New In
+      </button>
+      <button onclick="applySortOption('price-low', this)" class="sort-option w-full text-left px-4 py-3 font-label-caps text-label-caps uppercase tracking-wider text-on-surface hover:bg-surface-container transition-colors">
+        Price: Low to High
+      </button>
+      <button onclick="applySortOption('price-high', this)" class="sort-option w-full text-left px-4 py-3 font-label-caps text-label-caps uppercase tracking-wider text-on-surface hover:bg-surface-container transition-colors">
+        Price: High to Low
+      </button>
+      <button onclick="applySortOption('bestsellers', this)" class="sort-option w-full text-left px-4 py-3 font-label-caps text-label-caps uppercase tracking-wider text-on-surface hover:bg-surface-container transition-colors">
+        Best Sellers
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Mobile Filter Drawer (slide-down) -->
+<div id="mobileFilterDrawer" class="hidden xl:hidden bg-surface border-b border-outline-variant px-0 pb-4 pt-2">
+  <div class="flex flex-wrap gap-2 mb-3">
+    <span class="font-label-caps text-label-caps uppercase text-on-surface-variant font-semibold text-[10px] w-full mb-1">Size</span>
+    <button onclick="selectMobileSize(this)" class="mobile-size-btn px-3 py-1.5 border border-outline-variant rounded font-label-caps text-label-caps uppercase text-on-surface hover:border-primary transition-colors text-[11px]">XS</button>
+    <button onclick="selectMobileSize(this)" class="mobile-size-btn px-3 py-1.5 border border-outline-variant rounded font-label-caps text-label-caps uppercase text-on-surface hover:border-primary transition-colors text-[11px]">S</button>
+    <button onclick="selectMobileSize(this)" class="mobile-size-btn px-3 py-1.5 border border-outline-variant rounded font-label-caps text-label-caps uppercase text-on-surface hover:border-primary transition-colors text-[11px]">M</button>
+    <button onclick="selectMobileSize(this)" class="mobile-size-btn px-3 py-1.5 border border-outline-variant rounded font-label-caps text-label-caps uppercase text-on-surface hover:border-primary transition-colors text-[11px]">L</button>
+    <button onclick="selectMobileSize(this)" class="mobile-size-btn px-3 py-1.5 border border-outline-variant rounded font-label-caps text-label-caps uppercase text-on-surface hover:border-primary transition-colors text-[11px]">XL</button>
+    <button onclick="selectMobileSize(this)" class="mobile-size-btn px-3 py-1.5 border border-outline-variant rounded font-label-caps text-label-caps uppercase text-on-surface hover:border-primary transition-colors text-[11px]">XXL</button>
+  </div>
+  <div class="flex flex-wrap gap-2 mb-3">
+    <span class="font-label-caps text-label-caps uppercase text-on-surface-variant font-semibold text-[10px] w-full mb-1">Price Range</span>
+    <input type="range" min="10000" max="65000" value="65000" oninput="document.getElementById('mobilePriceLabel').textContent = 'Up to ₨ ' + parseInt(this.value).toLocaleString()" class="w-full accent-primary h-1.5"/>
+    <span id="mobilePriceLabel" class="font-label-caps text-label-caps text-on-surface font-semibold text-[11px]">Up to ₨ 65,000</span>
+  </div>
+  <button onclick="closeMobileFilter()" class="mt-1 w-full py-2.5 bg-primary text-on-primary font-label-caps text-label-caps uppercase tracking-widest rounded font-semibold">
+    Apply Filters
+  </button>
+</div>
+
+<style>
+  .collection-tab { flex-shrink: 0; }
+  .active-tab {
+    color: #000 !important;
+    border-bottom-color: #000 !important;
+    font-weight: 700 !important;
+  }
+  .active-grid-view {
+    color: #000 !important;
+  }
+  .sort-option.active-sort {
+    background-color: #efeeea;
+    font-weight: 700;
+    color: #000;
+  }
+  .mobile-size-btn.selected {
+    background: #000;
+    color: #fff;
+    border-color: #000;
+  }
+  /* hide scrollbar for tab row */
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
+
+<script>
+  /* ---- Collection Tab Logic ---- */
+  function setActiveTab(btn, tabKey) {
+    document.querySelectorAll('.collection-tab').forEach(t => {
+      t.classList.remove('active-tab');
+      t.classList.add('text-on-surface-variant');
+      t.classList.remove('text-on-surface');
+    });
+    btn.classList.add('active-tab');
+    btn.classList.remove('text-on-surface-variant');
+    btn.classList.add('text-on-surface');
+    // Show toast
+    if (typeof showToast === 'function') {
+      const labels = {all:'All Collections', 'naye-rang':'Naye Rang', jashn:'Jashn-e-Bahar', silk:'Pure Silk Edit', luxe:'Luxe Bridal', pret:'Everyday Pret'};
+      showToast('Viewing: ' + (labels[tabKey] || tabKey), { icon: 'style' });
+    }
+  }
+
+  /* ---- Grid View Toggle ---- */
+  function setGridView(cols, btn) {
+    document.querySelectorAll('.grid-view-btn').forEach(b => {
+      b.classList.remove('bg-surface-container', 'active-grid-view', 'text-on-surface');
+      b.classList.add('text-on-surface-variant');
+    });
+    btn.classList.add('bg-surface-container', 'active-grid-view', 'text-on-surface');
+    btn.classList.remove('text-on-surface-variant');
+    const grid = document.getElementById('productGrid');
+    if (!grid) return;
+    grid.classList.remove('grid-cols-1','sm:grid-cols-1','sm:grid-cols-2','lg:grid-cols-3','xl:grid-cols-4','grid-cols-2','grid-cols-3');
+    if (cols === 1) {
+      grid.classList.add('grid-cols-1');
+    } else if (cols === 2) {
+      grid.classList.add('grid-cols-2');
+    } else {
+      grid.classList.add('grid-cols-2','lg:grid-cols-3');
+    }
+    if (typeof showToast === 'function') showToast(cols + '-column view', { icon: 'grid_view' });
+  }
+
+  /* ---- Sort Dropdown ---- */
+  function toggleSortDropdown() {
+    const dd = document.getElementById('sortDropdown');
+    dd.classList.toggle('hidden');
+  }
+  function applySortOption(sortBy, btn) {
+    document.querySelectorAll('.sort-option').forEach(b => b.classList.remove('active-sort'));
+    btn.classList.add('active-sort');
+    document.getElementById('sortDropdown').classList.add('hidden');
+    if (typeof showToast === 'function') showToast('Sorted: ' + btn.textContent.trim(), { icon: 'sort' });
+  }
+  // close sort dropdown on outside click
+  document.addEventListener('click', function(e) {
+    const dd = document.getElementById('sortDropdown');
+    if (dd && !dd.classList.contains('hidden')) {
+      if (!e.target.closest('#sortDropdown') && !e.target.closest('[onclick="toggleSortDropdown()"]')) {
+        dd.classList.add('hidden');
+      }
+    }
+  });
+
+  /* ---- Mobile Filter ---- */
+  function toggleMobileFilter() {
+    const drawer = document.getElementById('mobileFilterDrawer');
+    drawer.classList.toggle('hidden');
+  }
+  function closeMobileFilter() {
+    document.getElementById('mobileFilterDrawer').classList.add('hidden');
+    if (typeof showToast === 'function') showToast('Filters applied!', { icon: 'check_circle' });
+  }
+  function selectMobileSize(btn) {
+    document.querySelectorAll('.mobile-size-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+</script>
+<!-- ======== END SAPPHIRE SECTION ======== -->
+
+<!-- The Grid (Dynamic: 3 or 4 columns based on view state) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter" id="productGrid">
+<!-- CARD 1: Noor Chanderi Silk Three-Piece Suite -->
+<div onclick="if (!event.target.closest('button, a')) window.location.href='product.html?title=Noor%20Chanderi%20Silk%20Three-Piece%20Suite&price=%E2%82%A8%2032%2C500&img=https%3A//lh3.googleusercontent.com/aida-public/AB6AXuDFKFCQHIBjL7KbdhQ8W8dpmy9aWULwMniMdz2BGnvj1PGWuu6GtUeehG94kD4v8YuiWTijL5gkQQgib2IA6GEOcRd-3iDmrDxVZHwwH0L59ngGiUEHT6Jm9I-jv8ysKyHP196oORflxZ037uWxEnIzIPCfzugVF0GLSKt6XQF5BhTJKH5aY3FXeZdx_P_2vWY8NAl6FW9Y1Pbx0iIC1jO6AAM1qISOF888e083dm0r1PwzDi0BUGyd'" class="group flex flex-col bg-surface-container-low rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer">
+<div class="relative aspect-[3/4] w-full bg-surface-container overflow-hidden">
+<a href="product.html?title=Noor%20Chanderi%20Silk%20Three-Piece%20Suite&price=%E2%82%A8%2032%2C500&img=https%3A//lh3.googleusercontent.com/aida-public/AB6AXuDFKFCQHIBjL7KbdhQ8W8dpmy9aWULwMniMdz2BGnvj1PGWuu6GtUeehG94kD4v8YuiWTijL5gkQQgib2IA6GEOcRd-3iDmrDxVZHwwH0L59ngGiUEHT6Jm9I-jv8ysKyHP196oORflxZ037uWxEnIzIPCfzugVF0GLSKt6XQF5BhTJKH5aY3FXeZdx_P_2vWY8NAl6FW9Y1Pbx0iIC1jO6AAM1qISOF888e083dm0r1PwzDi0BUGyd" class="block w-full h-full cursor-pointer relative z-0">
+<img class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="High fashion editorial full shot of an elegant South Asian woman wearing an ivory Noor Chanderi silk three piece suite with subtle gold embroidery in a sunlit Karachi courtyard with architectural archways and soft shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFKFCQHIBjL7KbdhQ8W8dpmy9aWULwMniMdz2BGnvj1PGWuu6GtUeehG94kD4v8YuiWTijL5gkQQgib2IA6GEOcRd-3iDmrDxVZHwwH0L59ngGiUEHT6Jm9I-jv8ysKyHP196oORflxZ037uWxEnIzIPCfzugVF0GLSKt6XQF5BhTJKH5aY3FXeZdx_P_2vWY8NAl6FW9Y1Pbx0iIC1jO6AAM1qISOF888e083dm0r1PwzDi0BUGyd"/>
+</a>
+<!-- Badges -->
+<div class="absolute top-3 left-3 flex flex-col gap-1 z-10">
+<span class="bg-primary text-on-primary font-label-caps text-[10px] px-2.5 py-1 uppercase tracking-widest rounded-full shadow-sm">Bestseller</span>
+<span class="bg-surface/90 backdrop-blur-sm text-on-surface font-label-caps text-[9px] px-2 py-0.5 uppercase tracking-wider rounded-full shadow-sm">COD Available</span>
+</div>
+<!-- Wishlist Floating Icon -->
+<button onclick="event.stopPropagation(); toggleWishlist(this, 'shop-1', 'Noor Chanderi Silk Three-Piece Suite')" aria-label="Add to wishlist" class="absolute top-3 right-3 w-9 h-9 rounded-full bg-surface/90 backdrop-blur-sm text-on-surface flex items-center justify-center shadow-md hover:text-error hover:scale-110 transition-all z-10">
+<span class="material-symbols-outlined text-[19px]">favorite</span>
+</button>
+<!-- Quick View / Add Slide Up -->
+<div class="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-surface-container-highest/95 via-surface-container-highest/80 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex flex-col gap-1.5 z-20">
+<div class="flex justify-center gap-1.5 py-1">
+<span class="text-[10px] font-label-caps uppercase text-on-surface-variant font-semibold">Quick Sizes:</span>
+<span class="text-[10px] font-semibold px-1.5 bg-surface rounded text-on-surface">XS</span>
+<span class="text-[10px] font-semibold px-1.5 bg-surface rounded text-on-surface">S</span>
+<span class="text-[10px] font-semibold px-1.5 bg-primary text-on-primary rounded">M</span>
+<span class="text-[10px] font-semibold px-1.5 bg-surface rounded text-on-surface">L</span>
+</div>
+<button onclick="event.stopPropagation(); quickAddToCart('Noor Chanderi Silk Three-Piece Suite', '₨ 32,500')" class="w-full py-2.5 bg-primary hover:bg-on-surface-variant text-on-primary font-label-caps text-label-caps uppercase tracking-wider rounded text-center transition-colors shadow-sm flex items-center justify-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-[16px]">shopping_bag</span> Quick Add • Bag
+</button>
+</div>
+</div>
+<!-- Card Metadata -->
+<div class="p-space-sm flex flex-col flex-1 justify-between">
+<div>
+<div class="flex items-center justify-between text-on-surface-variant font-label-caps text-[10px] uppercase mb-1">
+<span>Handcrafted Chanderi Silk</span>
+<span class="text-secondary font-semibold">Ready-to-Ship</span>
+</div>
+<h2 class="font-headline-sm text-[17px] leading-snug text-on-surface group-hover:text-secondary transition-colors mb-1 font-medium"><a href="product.html?title=Noor%20Chanderi%20Silk%20Three-Piece%20Suite&price=%E2%82%A8%2032%2C500&img=https%3A//lh3.googleusercontent.com/aida-public/AB6AXuDFKFCQHIBjL7KbdhQ8W8dpmy9aWULwMniMdz2BGnvj1PGWuu6GtUeehG94kD4v8YuiWTijL5gkQQgib2IA6GEOcRd-3iDmrDxVZHwwH0L59ngGiUEHT6Jm9I-jv8ysKyHP196oORflxZ037uWxEnIzIPCfzugVF0GLSKt6XQF5BhTJKH5aY3FXeZdx_P_2vWY8NAl6FW9Y1Pbx0iIC1jO6AAM1qISOF888e083dm0r1PwzDi0BUGyd" class="hover:underline">Noor Chanderi Silk Three-Piece Suite</a></h2>
+</div>
+<div class="mt-space-sm pt-space-xs flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-price-lg text-price-md text-on-surface font-semibold">₨ 32,500</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant">Includes Kameez, Trouser &amp; Dupatta</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-2.5 h-2.5 rounded-full bg-[#FAF7F2] ring-1 ring-outline"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#E5D7C5]"></span>
+</div>
+</div>
+</div>
+</div>
+<!-- CARD 2: Sovereign Tailored Peak-Lapel Blazer -->
+<div onclick="if (!event.target.closest('button, a')) window.location.href='product.html?title=Sovereign%20Tailored%20Peak-Lapel%20Blazer&price=%E2%82%A8%2036%2C000&img=https%3A//lh3.googleusercontent.com/aida-public/AB6AXuBiVId0YFTnx2E2ohikC92mNMo6sxW_ukH65mBf6F5_3D7Or_qF1-FTJq8iciy_B7xiz8wkf1znbZel3Mj4cNC08qMWAbETOAsTOzBvlIrrcgeMUsRUWZnKCxJV2Ruz1rNSOsRK9jj-TTl0R7rzyRi8EWEC5exuHXD9QFsxBf3tT6BFfEQVcRRAsWnm4pfS-g66iEqYqLdRqoVQXO8rnitQMFzL0ev5hDCO8sPpZb6Md_xGCjzcPfRS'" class="group flex flex-col bg-surface-container-low rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer">
+<div class="relative aspect-[3/4] w-full bg-surface-container overflow-hidden">
+<a href="product.html?title=Sovereign%20Tailored%20Peak-Lapel%20Blazer&price=%E2%82%A8%2036%2C000&img=https%3A//lh3.googleusercontent.com/aida-public/AB6AXuBiVId0YFTnx2E2ohikC92mNMo6sxW_ukH65mBf6F5_3D7Or_qF1-FTJq8iciy_B7xiz8wkf1znbZel3Mj4cNC08qMWAbETOAsTOzBvlIrrcgeMUsRUWZnKCxJV2Ruz1rNSOsRK9jj-TTl0R7rzyRi8EWEC5exuHXD9QFsxBf3tT6BFfEQVcRRAsWnm4pfS-g66iEqYqLdRqoVQXO8rnitQMFzL0ev5hDCO8sPpZb6Md_xGCjzcPfRS" class="block w-full h-full cursor-pointer relative z-0">
+<img class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="Chic editorial studio portrait of a Pakistani woman dressed in a structured ivory and camel peak-lapel double-breasted blazer with fine horn buttons, paired with contemporary pleated wide trousers in a minimalist neutral loft setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBiVId0YFTnx2E2ohikC92mNMo6sxW_ukH65mBf6F5_3D7Or_qF1-FTJq8iciy_B7xiz8wkf1znbZel3Mj4cNC08qMWAbETOAsTOzBvlIrrcgeMUsRUWZnKCxJV2Ruz1rNSOsRK9jj-TTl0R7rzyRi8EWEC5exuHXD9QFsxBf3tT6BFfEQVcRRAsWnm4pfS-g66iEqYqLdRqoVQXO8rnitQMFzL0ev5hDCO8sPpZb6Md_xGCjzcPfRS"/>
+</a>
+<div class="absolute top-3 left-3 flex flex-col gap-1 z-10">
+<span class="bg-secondary text-on-secondary font-label-caps text-[10px] px-2.5 py-1 uppercase tracking-widest rounded-full shadow-sm">New Collection</span>
+</div>
+<button onclick="event.stopPropagation(); toggleWishlist(this, 'shop-2', 'Sovereign Tailored Peak-Lapel Blazer')" aria-label="Add to wishlist" class="absolute top-3 right-3 w-9 h-9 rounded-full bg-surface/90 backdrop-blur-sm text-on-surface flex items-center justify-center shadow-md hover:text-error hover:scale-110 transition-all z-10">
+<span class="material-symbols-outlined text-[19px]">favorite</span>
+</button>
+<div class="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-surface-container-highest/95 via-surface-container-highest/80 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex flex-col gap-1.5 z-20">
+<div class="flex justify-center gap-1.5 py-1">
+<span class="text-[10px] font-label-caps uppercase text-on-surface-variant font-semibold">Quick Sizes:</span>
+<span class="text-[10px] font-semibold px-1.5 bg-surface rounded text-on-surface">XS</span>
+<span class="text-[10px] font-semibold px-1.5 bg-surface rounded text-on-surface">S</span>
+<span class="text-[10px] font-semibold px-1.5 bg-primary text-on-primary rounded">M</span>
+<span class="text-[10px] font-semibold px-1.5 bg-surface rounded text-on-surface">L</span>
+</div>
+<button onclick="event.stopPropagation(); quickAddToCart('Sovereign Tailored Peak-Lapel Blazer', '₨ 36,000')" class="w-full py-2.5 bg-primary hover:bg-on-surface-variant text-on-primary font-label-caps text-label-caps uppercase tracking-wider rounded text-center transition-colors shadow-sm flex items-center justify-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-[16px]">shopping_bag</span> Quick Add • Bag
+</button>
+</div>
+</div>
+<div class="p-space-sm flex flex-col flex-1 justify-between">
+<div>
+<div class="flex items-center justify-between text-on-surface-variant font-label-caps text-[10px] uppercase mb-1">
+<span>Western Tailoring</span>
+<span class="flex items-center gap-0.5 text-secondary font-bold">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span> 4.9 (18)
+                </span>
+</div>
+<h2 class="font-headline-sm text-[17px] leading-snug text-on-surface group-hover:text-secondary transition-colors mb-1 font-medium"><a href="product.html?title=Sovereign%20Tailored%20Peak-Lapel%20Blazer&price=%E2%82%A8%2036%2C000&img=https%3A//lh3.googleusercontent.com/aida-public/AB6AXuBiVId0YFTnx2E2ohikC92mNMo6sxW_ukH65mBf6F5_3D7Or_qF1-FTJq8iciy_B7xiz8wkf1znbZel3Mj4cNC08qMWAbETOAsTOzBvlIrrcgeMUsRUWZnKCxJV2Ruz1rNSOsRK9jj-TTl0R7rzyRi8EWEC5exuHXD9QFsxBf3tT6BFfEQVcRRAsWnm4pfS-g66iEqYqLdRqoVQXO8rnitQMFzL0ev5hDCO8sPpZb6Md_xGCjzcPfRS" class="hover:underline">Sovereign Tailored Peak-Lapel Blazer</a></h2>
+</div>
+<div class="mt-space-sm pt-space-xs flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-price-lg text-price-md text-on-surface font-semibold">₨ 36,000</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant">Structured Italian Crepe</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-2.5 h-2.5 rounded-full bg-[#1C1B1A]"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#E5D7C5]"></span>
+</div>
+</div>
+</div>
+</div>
+<!-- CARD 3: Gulnar Hand-Tilla Embellished Kurta (Discounted) -->
+<div onclick="if (!event.target.closest('button, a')) window.location.href='product.html?title=Gulnar%20Hand-Tilla%20Embellished%20Kurta&price=%E2%82%A8%2026%2C900&img=https%3A//lh3.googleusercontent.com/aida-public/AB6AXuC5gW0WAJkL4a-R4S8Ocwnc1XXWZwymgXpIFRlehEe0c_zJatTY_MzrXQICocNa2k6Z3cKflBeSTIvdPEIX2looEjA-R5mW45aD7YNiXUqruvdxw86cts5TTmy6k56_0R8WahEipVqUEfxSrgJnaYEuzWdtNhjx5fGQ8sRz_18D53hZjkhcVtQ1klIwk-iM3dOmsu8v6SQO6iF8KjkoSYWUUap8hP_v07pyXN2_1fLdz82-hicx2CiT'" class="group flex flex-col bg-surface-container-low rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer">
+<div class="relative aspect-[3/4] w-full bg-surface-container overflow-hidden">
+<a href="product.html?title=Gulnar%20Hand-Tilla%20Embellished%20Kurta&price=%E2%82%A8%2026%2C900&img=https%3A//lh3.googleusercontent.com/aida-public/AB6AXuC5gW0WAJkL4a-R4S8Ocwnc1XXWZwymgXpIFRlehEe0c_zJatTY_MzrXQICocNa2k6Z3cKflBeSTIvdPEIX2looEjA-R5mW45aD7YNiXUqruvdxw86cts5TTmy6k56_0R8WahEipVqUEfxSrgJnaYEuzWdtNhjx5fGQ8sRz_18D53hZjkhcVtQ1klIwk-iM3dOmsu8v6SQO6iF8KjkoSYWUUap8hP_v07pyXN2_1fLdz82-hicx2CiT" class="block w-full h-full cursor-pointer relative z-0">
+<img class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="Close up editorial lookbook fashion photography of a burgundy deep plum Gulnar silk kurta with intricate gold zardozi and hand-tilla floral neckline embroidery, modeled against a warm beige textured plaster wall." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5gW0WAJkL4a-R4S8Ocwnc1XXWZwymgXpIFRlehEe0c_zJatTY_MzrXQICocNa2k6Z3cKflBeSTIvdPEIX2looEjA-R5mW45aD7YNiXUqruvdxw86cts5TTmy6k56_0R8WahEipVqUEfxSrgJnaYEuzWdtNhjx5fGQ8sRz_18D53hZjkhcVtQ1klIwk-iM3dOmsu8v6SQO6iF8KjkoSYWUUap8hP_v07pyXN2_1fLdz82-hicx2CiT"/>
+</a>
+<div class="absolute top-3 left-3 flex flex-col gap-1 z-10">
+<span class="bg-error text-on-error font-label-caps text-[10px] px-2.5 py-1 uppercase tracking-widest rounded-full shadow-sm">15% Off</span>
+<span class="bg-surface/90 backdrop-blur-sm text-on-surface font-label-caps text-[9px] px-2 py-0.5 uppercase tracking-wider rounded-full shadow-sm">Few Left</span>
+</div>
+<button onclick="event.stopPropagation(); toggleWishlist(this, 'shop-3', 'Gulnar Hand-Tilla Embellished Kurta')" aria-label="Add to wishlist" class="absolute top-3 right-3 w-9 h-9 rounded-full bg-surface/90 backdrop-blur-sm text-on-surface flex items-center justify-center shadow-md hover:text-error hover:scale-110 transition-all z-10">
+<span class="material-symbols-outlined text-[19px]">favorite</span>
+</button>
+<div class="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-surface-container-highest/95 via-surface-container-highest/80 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex flex-col gap-1.5 z-20">
+<div class="flex justify-center gap-1.5 py-1">
+<span class="text-[10px] font-label-caps uppercase text-on-surface-variant font-semibold">Quick Sizes:</span>
+<span class="text-[10px] font-semibold px-1.5 bg-surface rounded text-on-surface">XS</span>
+<span class="text-[10px] font-semibold px-1.5 bg-surface rounded text-on-surface">S</span>
+<span class="text-[10px] font-semibold px-1.5 bg-primary text-on-primary rounded">M</span>
+<span class="text-[10px] font-semibold px-1.5 bg-surface rounded text-on-surface">L</span>
+</div>
+<button onclick="event.stopPropagation(); quickAddToCart('Gulnar Hand-Tilla Embellished Kurta', '₨ 26,900')" class="w-full py-2.5 bg-primary hover:bg-on-surface-variant text-on-primary font-label-caps text-label-caps uppercase tracking-wider rounded text-center transition-colors shadow-sm flex items-center justify-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-[16px]">shopping_bag</span> Quick Add • Bag
+</button>
+</div>
+</div>
+<div class="p-space-sm flex flex-col flex-1 justify-between">
+<div>
+<div class="flex items-center justify-between text-on-surface-variant font-label-caps text-[10px] uppercase mb-1">
+<span>Raw Silk Pret</span>
+<span class="text-error font-semibold">Save ₨ 4,600</span>
+</div>
+<h2 class="font-headline-sm text-[17px] leading-snug text-on-surface group-hover:text-secondary transition-colors mb-1 font-medium"><a href="product.html?title=Gulnar%20Hand-Tilla%20Embellished%20Kurta&price=%E2%82%A8%2026%2C900&img=https%3A//lh3.googleusercontent.com/aida-public/AB6AXuC5gW0WAJkL4a-R4S8Ocwnc1XXWZwymgXpIFRlehEe0c_zJatTY_MzrXQICocNa2k6Z3cKflBeSTIvdPEIX2looEjA-R5mW45aD7YNiXUqruvdxw86cts5TTmy6k56_0R8WahEipVqUEfxSrgJnaYEuzWdtNhjx5fGQ8sRz_18D53hZjkhcVtQ1klIwk-iM3dOmsu8v6SQO6iF8KjkoSYWUUap8hP_v07pyXN2_1fLdz82-hicx2CiT" class="hover:underline">Gulnar Hand-Tilla Embellished Kurta</a></h2>
+</div>
+<div class="mt-space-sm pt-space-xs flex items-center justify-between">
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="font-price-lg text-price-md text-error font-semibold">₨ 26,900</span>
+<span class="font-label-sm text-[11px] text-on-surface-variant line-through">₨ 31,500</span>
+</div>
+<span class="font-label-sm text-[10px] text-on-surface-variant">Pure Zari Weft Craftsmanship</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-2.5 h-2.5 rounded-full bg-[#581825]"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#1A382B]"></span>
+</div>
+</div>
+</div>
+</div>
+<!-- CARD 4: Elysian Silk Wide-Leg Trouser Set -->
+<div onclick="if (!event.target.closest('button, a')) window.location.href='product.html?title=Elysian%20Silk%20Wide-Leg%20Trouser%20Set&price=%E2%82%A8%2019%2C500&img=https%3A//lh3.googleusercontent.com/aida-public/AB6AXuCx-ctGdn5uPX64hNVVm2VTr3pv8YOxQPEZAXyLy1i1p81kjTiAdtUmnl-rpxYPsyZk6o750sYEDxUTptEZLPyTk4pWaZGfk3Ej2jagCZq3ByYpmflgwqTyetu_lvlQPc2wPrqzukbqhDHDjdBQ8c_xUx69J8FHzIsRfhXFSAa6V8nwc09MLusWQ1mHLoM9IMUGAdYX77JBAaCz2Ye_TU2BJK2kVW7u5_j0JPPTF_Q6WmoOtREU-yF7'" class="group flex flex-col bg-surface-container-low rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer">
+<div class="relative aspect-[3/4] w-full bg-surface-container overflow-hidden">
+<a href="product.html?title=Elysian%20Silk%20Wide-Leg%20Trouser%20Set&price=%E2%82%A8%2019%2C500&img=https%3A//lh3.googleusercontent.com/aida-public/AB6AXuCx-ctGdn5uPX64hNVVm2VTr3pv8YOxQPEZAXyLy1i1p81kjTiAdtUmnl-rpxYPsyZk6o750sYEDxUTptEZLPyTk4pWaZGfk3Ej2jagCZq3ByYpmflgwqTyetu_lvlQPc2wPrqzukbqhDHDjdBQ8c_xUx69J8FHzIsRfhXFSAa6V8nwc09MLusWQ1mHLoM9IMUGAdYX77JBAaCz2Ye_TU2BJK2kVW7u5_j0JPPTF_Q6WmoOtREU-yF7" class="block w-full h-full cursor-pointer relative z-0">
+<img class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="Full length editorial shot of a woman lounging in an Elysian olive sage green wide-leg pure silk matching coordinate trouser and minimalist tunic set, bathed in soft afternoon warm daylight." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCx-ctGdn5uPX64hNVVm2VTr3pv8YOxQPEZAXyLy1i1p81kjTiAdtUmnl-rpxYPsyZk6o750sYEDxUTptEZLPyTk4pWaZGfk3Ej2jagCZq3ByYpmflgwqTyetu_lvlQPc2wPrqzukbqhDHDjdBQ8c_xUx69J8FHzIsRfhXFSAa6V8nwc09MLusWQ1mHLoM9IMUGAdYX77JBAaCz2Ye_TU2BJK2kVW7u5_j0JPPTF_Q6WmoOtREU-yF7"/>
+</a>
+<button onclick="event.stopPropagation(); toggleWishlist(this, 'shop-4', 'Elysian Silk Wide-Leg Trouser Set')" aria-label="Add to wishlist" class="absolute top-3 right-3 w-9 h-9 rounded-full bg-surface/90 backdrop-blur-sm text-on-surface flex items-center justify-center shadow-md hover:text-error hover:scale-110 transition-all z-10">
+<span class="material-symbols-outlined text-[19px]">favorite</span>
+</button>
+<div class="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-surface-container-highest/95 via-surface-container-highest/80 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex flex-col gap-1.5 z-20">
+<div class="flex justify-center gap-1.5 py-1">
+<span class="text-[10px] font-label-caps uppercase text-on-surface-variant font-semibold">Quick Sizes:</span>
+<span class="text-[10px] font-semibold px-1.5 bg-surface rounded text-on-surface">XS</span>
+<span class="text-[10px] font-semibold px-1.5 bg-surface rounded text-on-surface">S</span>
+<span class="text-[10px] font-semibold px-1.5 bg-primary text-on-primary rounded">M</span>
+<span class="text-[10px] font-semibold px-1.5 bg-surface rounded text-on-surface">L</span>
+</div>
+<button onclick="event.stopPropagation(); quickAddToCart('Elysian Silk Wide-Leg Trouser Set', '₨ 19,500')" class="w-full py-2.5 bg-primary hover:bg-on-surface-variant text-on-primary font-label-caps text-label-caps uppercase tracking-wider rounded text-center transition-colors shadow-sm flex items-center justify-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-[16px]">shopping_bag</span> Quick Add • Bag
+</button>
+</div>
+</div>
+<div class="p-space-sm flex flex-col flex-1 justify-between">
+<div>
+<div class="flex items-center justify-between text-on-surface-variant font-label-caps text-[10px] uppercase mb-1">
+<span>Lounge • Fusion</span>
+<span class="text-secondary font-semibold">Signature Cut</span>
+</div>
+<h2 class="font-headline-sm text-[17px] leading-snug text-on-surface group-hover:text-secondary transition-colors mb-1 font-medium"><a href="product.html?title=Elysian%20Silk%20Wide-Leg%20Trouser%20Set&price=%E2%82%A8%2019%2C500&img=https%3A//lh3.googleusercontent.com/aida-public/AB6AXuCx-ctGdn5uPX64hNVVm2VTr3pv8YOxQPEZAXyLy1i1p81kjTiAdtUmnl-rpxYPsyZk6o750sYEDxUTptEZLPyTk4pWaZGfk3Ej2jagCZq3ByYpmflgwqTyetu_lvlQPc2wPrqzukbqhDHDjdBQ8c_xUx69J8FHzIsRfhXFSAa6V8nwc09MLusWQ1mHLoM9IMUGAdYX77JBAaCz2Ye_TU2BJK2kVW7u5_j0JPPTF_Q6WmoOtREU-yF7" class="hover:underline">Elysian Silk Wide-Leg Trouser Set</a></h2>
+</div>
+<div class="mt-space-sm pt-space-xs flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-price-lg text-price-md text-on-surface font-semibold">₨ 19,500</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant">Two-Piece Co-ord</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-2.5 h-2.5 rounded-full bg-[#8A9A86]"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#D4A396]"></span>
+</div>
+</div>
+</div>
+</div>
+<!-- CARD 5: Sheesh Mahal Organza Dupatta & Kalidar (Exclusive) -->
+<div onclick="if (!event.target.closest('button, a')) window.location.href='product.html?title=Sheesh%20Mahal%20Organza%20Dupatta%20%26amp%3B%20Kalidar&price=%E2%82%A8%2048%2C000&img=https%3A//lh3.googleusercontent.com/aida-public/AB6AXuAaTtgSgSzwVED1QkvAGCIKmgd7YlJYjt2-OejEFWzech8mr51H21gFaUU6_fMUgX6pdd10rIsXoOVPZFscmTlaA3ivZPySNqnFwUdTh7ShNSuBbbUUFfMr5uniTmVfHLNUuJSswHU_cxY99fhCN-Z1xK7BNQ-mK3OAIAZANhBxpzh33GHP2pYUJjAaM9BNAdTBIsKNFUD1vGNMcsbsVL2aaBjW5ybSOg_NvkmohrrfO4HMdHiUcK9W'" class="group flex flex-col bg-surface-container-low rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer">
+<div class="relative aspect-[3/4] w-full bg-surface-container overflow-hidden">
+<a href="product.html?title=Sheesh%20Mahal%20Organza%20Dupatta%20%26amp%3B%20Kalidar&price=%E2%82%A8%2048%2C000&img=https%3A//lh3.googleusercontent.com/aida-public/AB6AXuAaTtgSgSzwVED1QkvAGCIKmgd7YlJYjt2-OejEFWzech8mr51H21gFaUU6_fMUgX6pdd10rIsXoOVPZFscmTlaA3ivZPySNqnFwUdTh7ShNSuBbbUUFfMr5uniTmVfHLNUuJSswHU_cxY99fhCN-Z1xK7BNQ-mK3OAIAZANhBxpzh33GHP2pYUJjAaM9BNAdTBIsKNFUD1vGNMcsbsVL2aaBjW5ybSOg_NvkmohrrfO4HMdHiUcK9W" class="block w-full h-full cursor-pointer relative z-0">
+<img class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="High couture Pakistani wedding formalwear photograph showcasing an ethereal Sheesh Mahal dusty rose organza kalidar with intricate mukesh mirrorwork and scalloped border dupatta, dramatic editorial lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaTtgSgSzwVED1QkvAGCIKmgd7YlJYjt2-OejEFWzech8mr51H21gFaUU6_fMUgX6pdd10rIsXoOVPZFscmTlaA3ivZPySNqnFwUdTh7ShNSuBbbUUFfMr5uniTmVfHLNUuJSswHU_cxY99fhCN-Z1xK7BNQ-mK3OAIAZANhBxpzh33GHP2pYUJjAaM9BNAdTBIsKNFUD1vGNMcsbsVL2aaBjW5ybSOg_NvkmohrrfO4HMdHiUcK9W"/>
+</a>
+<div class="absolute top-3 left-3 flex flex-col gap-1 z-10">
+<span class="bg-primary-container text-on-primary font-label-caps text-[10px] px-2.5 py-1 uppercase tracking-widest rounded-full shadow-sm">Atelier Exclusive</span>
+</div>
+<button onclick="event.stopPropagation(); toggleWishlist(this, 'shop-5', 'Sheesh Mahal Organza Dupatta &amp; Kalidar')" aria-label="Add to wishlist" class="absolute top-3 right-3 w-9 h-9 rounded-full bg-surface/90 backdrop-blur-sm text-on-surface flex items-center justify-center shadow-md hover:text-error hover:scale-110 transition-all z-10">
+<span class="material-symbols-outlined text-[19px]">favorite</span>
+</button>
+<div class="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-surface-container-highest/95 via-surface-container-highest/80 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex flex-col gap-1.5 z-20">
+<div class="flex justify-center gap-1.5 py-1">
+<span class="text-[10px] font-label-caps uppercase text-on-surface-variant font-semibold">Quick Sizes:</span>
+<span class="text-[10px] font-semibold px-1.5 bg-surface rounded text-on-surface">XS</span>
+<span class="text-[10px] font-semibold px-1.5 bg-surface rounded text-on-surface">S</span>
+<span class="text-[10px] font-semibold px-1.5 bg-primary text-on-primary rounded">M</span>
+<span class="text-[10px] font-semibold px-1.5 bg-surface rounded text-on-surface">L</span>
+</div>
+<button onclick="event.stopPropagation(); quickAddToCart('Sheesh Mahal Organza Dupatta &amp; Kalidar', '₨ 48,000')" class="w-full py-2.5 bg-primary hover:bg-on-surface-variant text-on-primary font-label-caps text-label-caps uppercase tracking-wider rounded text-center transition-colors shadow-sm flex items-center justify-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-[16px]">shopping_bag</span> Quick Add • Bag
+</button>
+</div>
+</div>
+<div class="p-space-sm flex flex-col flex-1 justify-between">
+<div>
+<div class="flex items-center justify-between text-on-surface-variant font-label-caps text-[10px] uppercase mb-1">
+<span>Formal &amp; Festive</span>
+<span class="text-secondary font-semibold">Hand-Loomed</span>
+</div>
+<h2 class="font-headline-sm text-[17px] leading-snug text-on-surface group-hover:text-secondary transition-colors mb-1 font-medium"><a href="product.html?title=Sheesh%20Mahal%20Organza%20Dupatta%20%26amp%3B%20Kalidar&price=%E2%82%A8%2048%2C000&img=https%3A//lh3.googleusercontent.com/aida-public/AB6AXuAaTtgSgSzwVED1QkvAGCIKmgd7YlJYjt2-OejEFWzech8mr51H21gFaUU6_fMUgX6pdd10rIsXoOVPZFscmTlaA3ivZPySNqnFwUdTh7ShNSuBbbUUFfMr5uniTmVfHLNUuJSswHU_cxY99fhCN-Z1xK7BNQ-mK3OAIAZANhBxpzh33GHP2pYUJjAaM9BNAdTBIsKNFUD1vGNMcsbsVL2aaBjW5ybSOg_NvkmohrrfO4HMdHiUcK9W" class="hover:underline">Sheesh Mahal Organza Dupatta &amp; Kalidar</a></h2>
+</div>
+<div class="mt-space-sm pt-space-xs flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-price-lg text-price-md text-on-surface font-semibold">₨ 48,000</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant">Includes Custom Fitting Service</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-2.5 h-2.5 rounded-full bg-[#D4A396]"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#FAF7F2]"></span>
+</div>
+</div>
+</div>
+</div>
+<!-- CARD 6: Sahara Linen Belted Kimono Wrap -->
+<div onclick="if (!event.target.closest('button, a')) window.location.href='product.html?title=Sahara%20Linen%20Belted%20Kimono%20Wrap&price=%E2%82%A8%2021%2C000&img=https%3A//lh3.googleusercontent.com/aida-public/AB6AXuBFGaBrBqByX3XaC7tOZ71txTN15huHbKaUbeRnd-hrq65KnYNGmsrXcgqZSeQ1T86Z-nWX9d8GeKEr2yrxS9bjYzjSL5G1dvo0RlWmrWZcTPBidBiapmBniSUXz3ZN-wkpMizBfjglOavrUz05Ok8IaPYdeCu-d7mHazUNSf3q3QNo69Xr0VEc5-Es_RKgmXLEz-nPAQXKH3Rgl0km3o6cGPm_BV3me8IEmll6_YT5gCStr6AtKNh0'" class="group flex flex-col bg-surface-container-low rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer">
+<div class="relative aspect-[3/4] w-full bg-surface-container overflow-hidden">
+<a href="product.html?title=Sahara%20Linen%20Belted%20Kimono%20Wrap&price=%E2%82%A8%2021%2C000&img=https%3A//lh3.googleusercontent.com/aida-public/AB6AXuBFGaBrBqByX3XaC7tOZ71txTN15huHbKaUbeRnd-hrq65KnYNGmsrXcgqZSeQ1T86Z-nWX9d8GeKEr2yrxS9bjYzjSL5G1dvo0RlWmrWZcTPBidBiapmBniSUXz3ZN-wkpMizBfjglOavrUz05Ok8IaPYdeCu-d7mHazUNSf3q3QNo69Xr0VEc5-Es_RKgmXLEz-nPAQXKH3Rgl0km3o6cGPm_BV3me8IEmll6_YT5gCStr6AtKNh0" class="block w-full h-full cursor-pointer relative z-0">
+<img class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="Editorial lookbook photograph of a model in a breezy sand-beige Sahara pure linen belted wrap kimono coat with frayed hem details, shot in an outdoor sun-drenched architectural courtyard with palm leaf shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFGaBrBqByX3XaC7tOZ71txTN15huHbKaUbeRnd-hrq65KnYNGmsrXcgqZSeQ1T86Z-nWX9d8GeKEr2yrxS9bjYzjSL5G1dvo0RlWmrWZcTPBidBiapmBniSUXz3ZN-wkpMizBfjglOavrUz05Ok8IaPYdeCu-d7mHazUNSf3q3QNo69Xr0VEc5-Es_RKgmXLEz-nPAQXKH3Rgl0km3o6cGPm_BV3me8IEmll6_YT5gCStr6AtKNh0"/>
+</a>
+<button onclick="event.stopPropagation(); toggleWishlist(this, 'shop-6', 'Sahara Linen Belted Kimono Wrap')" aria-label="Add to wishlist" class="absolute top-3 right-3 w-9 h-9 rounded-full bg-surface/90 backdrop-blur-sm text-on-surface flex items-center justify-center shadow-md hover:text-error hover:scale-110 transition-all z-10">
+<span class="material-symbols-outlined text-[19px]">favorite</span>
+</button>
+<div class="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-surface-container-highest/95 via-surface-container-highest/80 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex flex-col gap-1.5 z-20">
+<div class="flex justify-center gap-1.5 py-1">
+<span class="text-[10px] font-label-caps uppercase text-on-surface-variant font-semibold">Quick Sizes:</span>
+<span class="text-[10px] font-semibold px-1.5 bg-surface rounded text-on-surface">XS</span>
+<span class="text-[10px] font-semibold px-1.5 bg-surface rounded text-on-surface">S</span>
+<span class="text-[10px] font-semibold px-1.5 bg-primary text-on-primary rounded">M</span>
+<span class="text-[10px] font-semibold px-1.5 bg-surface rounded text-on-surface">L</span>
+</div>
+<button onclick="event.stopPropagation(); quickAddToCart('Sahara Linen Belted Kimono Wrap', '₨ 21,000')" class="w-full py-2.5 bg-primary hover:bg-on-surface-variant text-on-primary font-label-caps text-label-caps uppercase tracking-wider rounded text-center transition-colors shadow-sm flex items-center justify-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-[16px]">shopping_bag</span> Quick Add • Bag
+</button>
+</div>
+</div>
+<div class="p-space-sm flex flex-col flex-1 justify-between">
+<div>
+<div class="flex items-center justify-between text-on-surface-variant font-label-caps text-[10px] uppercase mb-1">
+<span>Resort • Modern Western</span>
+<span class="text-secondary font-semibold">100% French Flax</span>
+</div>
+<h2 class="font-headline-sm text-[17px] leading-snug text-on-surface group-hover:text-secondary transition-colors mb-1 font-medium"><a href="product.html?title=Sahara%20Linen%20Belted%20Kimono%20Wrap&price=%E2%82%A8%2021%2C000&img=https%3A//lh3.googleusercontent.com/aida-public/AB6AXuBFGaBrBqByX3XaC7tOZ71txTN15huHbKaUbeRnd-hrq65KnYNGmsrXcgqZSeQ1T86Z-nWX9d8GeKEr2yrxS9bjYzjSL5G1dvo0RlWmrWZcTPBidBiapmBniSUXz3ZN-wkpMizBfjglOavrUz05Ok8IaPYdeCu-d7mHazUNSf3q3QNo69Xr0VEc5-Es_RKgmXLEz-nPAQXKH3Rgl0km3o6cGPm_BV3me8IEmll6_YT5gCStr6AtKNh0" class="hover:underline">Sahara Linen Belted Kimono Wrap</a></h2>
+</div>
+<div class="mt-space-sm pt-space-xs flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-price-lg text-price-md text-on-surface font-semibold">₨ 21,000</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant">Includes Self-Tie Sash</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-2.5 h-2.5 rounded-full bg-[#E5D7C5]"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#FAF7F2]"></span>
+</div>
+</div>
+</div>
+</div>
+<!-- CARD 7: Dusk Velvet Embroidered Kaftan -->
+<div onclick="if (!event.target.closest('button, a')) window.location.href='product.html?title=Dusk%20Velvet%20Embroidered%20Kaftan&price=%E2%82%A8%2038%2C500&img=https%3A//lh3.googleusercontent.com/aida-public/AB6AXuD0gTyVr345VR_mJSpePu7TymWTtk4psDTjynuxRqqc_6I3pZ_oE-ZUhRrHSzYJQU8wyZETR6WH0B8aEbTky7wFdj11NfmXt22s7utW-JrXHRfzoaH-uWdBdkCHEkQM6q3NPQwa2dvd9kmwtz7awUmbKO6hgs-r1m9AfCfQTo7DYeCINaxRdtX15r8IflBhylN02jae0XKgrh7vIz_f9aXfnY6WMaBEANw4EhqXQkN6NA5F6P8fW6w-'" class="group flex flex-col bg-surface-container-low rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer">
+<div class="relative aspect-[3/4] w-full bg-surface-container overflow-hidden">
+<a href="product.html?title=Dusk%20Velvet%20Embroidered%20Kaftan&price=%E2%82%A8%2038%2C500&img=https%3A//lh3.googleusercontent.com/aida-public/AB6AXuD0gTyVr345VR_mJSpePu7TymWTtk4psDTjynuxRqqc_6I3pZ_oE-ZUhRrHSzYJQU8wyZETR6WH0B8aEbTky7wFdj11NfmXt22s7utW-JrXHRfzoaH-uWdBdkCHEkQM6q3NPQwa2dvd9kmwtz7awUmbKO6hgs-r1m9AfCfQTo7DYeCINaxRdtX15r8IflBhylN02jae0XKgrh7vIz_f9aXfnY6WMaBEANw4EhqXQkN6NA5F6P8fW6w-" class="block w-full h-full cursor-pointer relative z-0">
+<img class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="Opulent luxury fashion photograph of a midnight emerald noir velvet flowing kaftan with antique gold marori embroidery along the high jewel neckline, dramatic studio shadows with golden halo lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0gTyVr345VR_mJSpePu7TymWTtk4psDTjynuxRqqc_6I3pZ_oE-ZUhRrHSzYJQU8wyZETR6WH0B8aEbTky7wFdj11NfmXt22s7utW-JrXHRfzoaH-uWdBdkCHEkQM6q3NPQwa2dvd9kmwtz7awUmbKO6hgs-r1m9AfCfQTo7DYeCINaxRdtX15r8IflBhylN02jae0XKgrh7vIz_f9aXfnY6WMaBEANw4EhqXQkN6NA5F6P8fW6w-"/>
+</a>
+<div class="absolute top-3 left-3 flex flex-col gap-1 z-10">
+<span class="bg-secondary text-on-secondary font-label-caps text-[10px] px-2.5 py-1 uppercase tracking-widest rounded-full shadow-sm">Festive Drop</span>
+</div>
+<button onclick="event.stopPropagation(); toggleWishlist(this, 'shop-7', 'Dusk Velvet Embroidered Kaftan')" aria-label="Add to wishlist" class="absolute top-3 right-3 w-9 h-9 rounded-full bg-surface/90 backdrop-blur-sm text-on-surface flex items-center justify-center shadow-md hover:text-error hover:scale-110 transition-all z-10">
+<span class="material-symbols-outlined text-[19px]">favorite</span>
+</button>
+<div class="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-surface-container-highest/95 via-surface-container-highest/80 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex flex-col gap-1.5 z-20">
+<div class="flex justify-center gap-1.5 py-1">
+<span class="text-[10px] font-label-caps uppercase text-on-surface-variant font-semibold">Quick Sizes:</span>
+<span class="text-[10px] font-semibold px-1.5 bg-surface rounded text-on-surface">XS</span>
+<span class="text-[10px] font-semibold px-1.5 bg-surface rounded text-on-surface">S</span>
+<span class="text-[10px] font-semibold px-1.5 bg-primary text-on-primary rounded">M</span>
+<span class="text-[10px] font-semibold px-1.5 bg-surface rounded text-on-surface">L</span>
+</div>
+<button onclick="event.stopPropagation(); quickAddToCart('Dusk Velvet Embroidered Kaftan', '₨ 38,500')" class="w-full py-2.5 bg-primary hover:bg-on-surface-variant text-on-primary font-label-caps text-label-caps uppercase tracking-wider rounded text-center transition-colors shadow-sm flex items-center justify-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-[16px]">shopping_bag</span> Quick Add • Bag
+</button>
+</div>
+</div>
+<div class="p-space-sm flex flex-col flex-1 justify-between">
+<div>
+<div class="flex items-center justify-between text-on-surface-variant font-label-caps text-[10px] uppercase mb-1">
+<span>Winter Festive Couture</span>
+<span class="text-secondary font-semibold">Micro Velvet</span>
+</div>
+<h2 class="font-headline-sm text-[17px] leading-snug text-on-surface group-hover:text-secondary transition-colors mb-1 font-medium"><a href="product.html?title=Dusk%20Velvet%20Embroidered%20Kaftan&price=%E2%82%A8%2038%2C500&img=https%3A//lh3.googleusercontent.com/aida-public/AB6AXuD0gTyVr345VR_mJSpePu7TymWTtk4psDTjynuxRqqc_6I3pZ_oE-ZUhRrHSzYJQU8wyZETR6WH0B8aEbTky7wFdj11NfmXt22s7utW-JrXHRfzoaH-uWdBdkCHEkQM6q3NPQwa2dvd9kmwtz7awUmbKO6hgs-r1m9AfCfQTo7DYeCINaxRdtX15r8IflBhylN02jae0XKgrh7vIz_f9aXfnY6WMaBEANw4EhqXQkN6NA5F6P8fW6w-" class="hover:underline">Dusk Velvet Embroidered Kaftan</a></h2>
+</div>
+<div class="mt-space-sm pt-space-xs flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-price-lg text-price-md text-on-surface font-semibold">₨ 38,500</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant">Signature Royal Cut</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-2.5 h-2.5 rounded-full bg-[#1A382B]"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#1C1B1A]"></span>
+</div>
+</div>
+</div>
+</div>
+<!-- CARD 8: Minimalist Ivory Poplin Pleated Tunic -->
+<div onclick="if (!event.target.closest('button, a')) window.location.href='product.html?title=Minimalist%20Ivory%20Poplin%20Pleated%20Tunic&price=%E2%82%A8%2016%2C500&img=https%3A//lh3.googleusercontent.com/aida-public/AB6AXuBb6RPhhT5GeP8UB8KZOPB7D6AezhoE0lRBw6tvDcnyUmT0i6-sAer6EfahLH_KBsBFN-6jRsb_BmpMtE0wutm3Ajcx9hcMv_nhzOp-JOI2n_I_Un9StGqInbTB51imjrV_Q2MAsChE86Gur-wIi5Z9gotUmuiIxhUr5s6Xhevl7lp_e9jrnb5o-A-JP_D3pp8SbafAYvNtbJFaL-HvYp9fGcKXrsm5Y4v8BOt9m1t6qHNKrFM497eH'" class="group flex flex-col bg-surface-container-low rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer">
+<div class="relative aspect-[3/4] w-full bg-surface-container overflow-hidden">
+<a href="product.html?title=Minimalist%20Ivory%20Poplin%20Pleated%20Tunic&price=%E2%82%A8%2016%2C500&img=https%3A//lh3.googleusercontent.com/aida-public/AB6AXuBb6RPhhT5GeP8UB8KZOPB7D6AezhoE0lRBw6tvDcnyUmT0i6-sAer6EfahLH_KBsBFN-6jRsb_BmpMtE0wutm3Ajcx9hcMv_nhzOp-JOI2n_I_Un9StGqInbTB51imjrV_Q2MAsChE86Gur-wIi5Z9gotUmuiIxhUr5s6Xhevl7lp_e9jrnb5o-A-JP_D3pp8SbafAYvNtbJFaL-HvYp9fGcKXrsm5Y4v8BOt9m1t6qHNKrFM497eH" class="block w-full h-full cursor-pointer relative z-0">
+<img class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="Minimalist clean studio photography of an ivory white cotton poplin pleated contemporary tunic shirt, tailored mandarin collar, elegant model pose with natural soft makeup and gold sculptural earrings." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBb6RPhhT5GeP8UB8KZOPB7D6AezhoE0lRBw6tvDcnyUmT0i6-sAer6EfahLH_KBsBFN-6jRsb_BmpMtE0wutm3Ajcx9hcMv_nhzOp-JOI2n_I_Un9StGqInbTB51imjrV_Q2MAsChE86Gur-wIi5Z9gotUmuiIxhUr5s6Xhevl7lp_e9jrnb5o-A-JP_D3pp8SbafAYvNtbJFaL-HvYp9fGcKXrsm5Y4v8BOt9m1t6qHNKrFM497eH"/>
+</a>
+<button onclick="event.stopPropagation(); toggleWishlist(this, 'shop-8', 'Minimalist Ivory Poplin Pleated Tunic')" aria-label="Add to wishlist" class="absolute top-3 right-3 w-9 h-9 rounded-full bg-surface/90 backdrop-blur-sm text-on-surface flex items-center justify-center shadow-md hover:text-error hover:scale-110 transition-all z-10">
+<span class="material-symbols-outlined text-[19px]">favorite</span>
+</button>
+<div class="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-surface-container-highest/95 via-surface-container-highest/80 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex flex-col gap-1.5 z-20">
+<div class="flex justify-center gap-1.5 py-1">
+<span class="text-[10px] font-label-caps uppercase text-on-surface-variant font-semibold">Quick Sizes:</span>
+<span class="text-[10px] font-semibold px-1.5 bg-surface rounded text-on-surface">XS</span>
+<span class="text-[10px] font-semibold px-1.5 bg-surface rounded text-on-surface">S</span>
+<span class="text-[10px] font-semibold px-1.5 bg-primary text-on-primary rounded">M</span>
+<span class="text-[10px] font-semibold px-1.5 bg-surface rounded text-on-surface">L</span>
+</div>
+<button onclick="event.stopPropagation(); quickAddToCart('Minimalist Ivory Poplin Pleated Tunic', '₨ 16,500')" class="w-full py-2.5 bg-primary hover:bg-on-surface-variant text-on-primary font-label-caps text-label-caps uppercase tracking-wider rounded text-center transition-colors shadow-sm flex items-center justify-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-[16px]">shopping_bag</span> Quick Add • Bag
+</button>
+</div>
+</div>
+<div class="p-space-sm flex flex-col flex-1 justify-between">
+<div>
+<div class="flex items-center justify-between text-on-surface-variant font-label-caps text-[10px] uppercase mb-1">
+<span>Everyday Luxury</span>
+<span class="text-secondary font-semibold">100% Egyptian Giza</span>
+</div>
+<h2 class="font-headline-sm text-[17px] leading-snug text-on-surface group-hover:text-secondary transition-colors mb-1 font-medium"><a href="product.html?title=Minimalist%20Ivory%20Poplin%20Pleated%20Tunic&price=%E2%82%A8%2016%2C500&img=https%3A//lh3.googleusercontent.com/aida-public/AB6AXuBb6RPhhT5GeP8UB8KZOPB7D6AezhoE0lRBw6tvDcnyUmT0i6-sAer6EfahLH_KBsBFN-6jRsb_BmpMtE0wutm3Ajcx9hcMv_nhzOp-JOI2n_I_Un9StGqInbTB51imjrV_Q2MAsChE86Gur-wIi5Z9gotUmuiIxhUr5s6Xhevl7lp_e9jrnb5o-A-JP_D3pp8SbafAYvNtbJFaL-HvYp9fGcKXrsm5Y4v8BOt9m1t6qHNKrFM497eH" class="hover:underline">Minimalist Ivory Poplin Pleated Tunic</a></h2>
+</div>
+<div class="mt-space-sm pt-space-xs flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-price-lg text-price-md text-on-surface font-semibold">₨ 16,500</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant">Stitched Breathable Weave</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-2.5 h-2.5 rounded-full bg-[#FAF7F2] ring-1 ring-outline"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#DBDAD6]"></span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination & Load More Experience -->
+<div class="mt-space-xl pt-space-lg flex flex-col items-center gap-space-md">
+<!-- Luxury Load More Button -->
+<button class="px-space-xl py-space-sm bg-surface-container-high hover:bg-primary hover:text-on-primary text-on-surface font-label-caps text-label-caps uppercase tracking-[0.2em] rounded-full shadow-sm transition-all duration-300 flex items-center gap-2">
+<span>Explore More Creations</span>
+<span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Showing 8 of 48 pieces</p>
+<!-- Pagination Numbers -->
+<div class="flex items-center gap-2">
+<button aria-label="Previous Page" class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-9 h-9 rounded-full bg-primary text-on-primary font-label-sm font-semibold flex items-center justify-center shadow-sm">1</button>
+<button class="w-9 h-9 rounded-full bg-surface hover:bg-surface-container text-on-surface font-label-sm font-medium flex items-center justify-center transition-colors">2</button>
+<button class="w-9 h-9 rounded-full bg-surface hover:bg-surface-container text-on-surface font-label-sm font-medium flex items-center justify-center transition-colors">3</button>
+<span class="px-1 text-on-surface-variant font-label-sm">…</span>
+<button class="w-9 h-9 rounded-full bg-surface hover:bg-surface-container text-on-surface font-label-sm font-medium flex items-center justify-center transition-colors">6</button>
+<button aria-label="Next Page" class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</main>
+</div>
+<!-- Editorial Lookbook Spotlight Callout -->
+<section class="w-full bg-surface-container py-space-xl px-margin-mobile md:px-margin mt-space-xl">
+<div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-gutter items-center">
+<div class="md:col-span-2 flex flex-col gap-space-xs">
+<span class="font-label-caps text-label-caps uppercase text-secondary font-semibold tracking-widest">Bespoke Atelier Fitting</span>
+<h3 class="font-display-hero text-headline-md md:text-headline-lg text-on-surface">Can't Find Your Exact Proportion?</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xl">
+          Our master karigars in Gulberg, Lahore, sculpt customized Kameez lengths, sleeve alterations, and tailor-made trousseaus. Connect directly with our Senior Stylist.
+        </p>
+</div>
+<div class="flex flex-col sm:flex-row md:flex-col lg:flex-row gap-space-sm items-start md:items-end justify-end">
+<button class="w-full sm:w-auto px-space-lg py-3 bg-primary hover:bg-on-surface-variant text-on-primary font-label-caps text-label-caps uppercase tracking-wider rounded transition-colors text-center shadow-md">
+          Book Atelier Virtual Fit
+        </button>
+<button class="w-full sm:w-auto px-space-lg py-3 bg-surface hover:bg-surface-container-highest text-on-surface font-label-caps text-label-caps uppercase tracking-wider rounded transition-colors text-center shadow-sm">
+          WhatsApp Concierge
+        </button>
+</div>
+</div>
+</section>
+</div>
+<script>
+  // Dynamic Grid Density View Switcher
+  const btn3 = document.getElementById('btnGrid3');
+  const btn4 = document.getElementById('btnGrid4');
+  const grid = document.getElementById('productGrid');
+
+  if (btn3 && btn4 && grid) {
+    btn3.addEventListener('click', () => {
+      grid.classList.remove('xl:grid-cols-4');
+      grid.classList.add('xl:grid-cols-3');
+      btn3.classList.add('bg-surface', 'text-on-surface', 'shadow-sm');
+      btn3.classList.remove('text-on-surface-variant');
+      btn4.classList.remove('bg-surface', 'text-on-surface', 'shadow-sm');
+      btn4.classList.add('text-on-surface-variant');
+    });
+
+    btn4.addEventListener('click', () => {
+      grid.classList.add('xl:grid-cols-4');
+      grid.classList.remove('xl:grid-cols-3');
+      btn4.classList.add('bg-surface', 'text-on-surface', 'shadow-sm');
+      btn4.classList.remove('text-on-surface-variant');
+      btn3.classList.remove('bg-surface', 'text-on-surface', 'shadow-sm');
+      btn3.classList.add('text-on-surface-variant');
+    });
+  }
+
+  // Filter Drawer Toggle (for responsive devices)
+  const toggleBtn = document.getElementById('toggleFilterBtn');
+  const filterRail = document.getElementById('filterSidebar');
+
+  if (toggleBtn && filterRail) {
+    toggleBtn.addEventListener('click', () => {
+      filterRail.classList.toggle('hidden');
+      if (!filterRail.classList.contains('hidden')) {
+        filterRail.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  }
+
+  // Filter Chips Logic
+  function removeFilterChip(btn) {
+    const chip = btn.closest('.filter-chip');
+    if (chip) {
+      chip.remove();
+      const remaining = document.querySelectorAll('.filter-chip').length;
+      showToast(`Filter removed (${remaining} filters active)`, { icon: 'tune' });
+      const badge = document.querySelector('#toggleFilterBtn span:last-child');
+      if (badge) badge.textContent = remaining;
+    }
+  }
+
+  function clearAllFilters() {
+    document.querySelectorAll('.filter-chip').forEach(c => c.remove());
+    showToast('All filters cleared', { icon: 'refresh' });
+    const badge = document.querySelector('#toggleFilterBtn span:last-child');
+    if (badge) badge.textContent = '0';
+    document.querySelectorAll('.sidebar-size-btn').forEach(b => {
+      b.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+      b.classList.add('bg-surface', 'text-on-surface');
+    });
+  }
+
+  function selectSidebarSize(btn) {
+    document.querySelectorAll('.sidebar-size-btn').forEach(b => {
+      b.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+      b.classList.add('bg-surface', 'text-on-surface');
+    });
+    btn.classList.add('bg-primary', 'text-on-primary', 'shadow-sm');
+    btn.classList.remove('bg-surface', 'text-on-surface');
+    showToast(`Filter applied: Size ${btn.textContent.trim()}`, { icon: 'tune' });
+  }
+
+  function selectSidebarColor(btn, colorName) {
+    document.querySelectorAll('[title]').forEach(b => b.classList.remove('ring-2', 'ring-primary'));
+    btn.classList.add('ring-2', 'ring-primary');
+    showToast(`Filter applied: Tone ${colorName}`, { icon: 'palette' });
+  }
+
+  function updatePriceSlider(val) {
+    const label = document.getElementById('maxPriceLabel');
+    if (label) label.textContent = `Max: ₨ ${parseInt(val).toLocaleString()}`;
+  }
+
+  function sortProducts(sortBy) {
+    showToast(`Sorted by: ${sortBy.replace('-', ' ').toUpperCase()}`, { icon: 'sort' });
+  }
+
+  function goToPage(pageNo, btn) {
+    document.querySelectorAll('.pagination-btn').forEach(b => {
+      b.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+      b.classList.add('bg-surface', 'text-on-surface');
+    });
+    btn.classList.add('bg-primary', 'text-on-primary', 'shadow-sm');
+    btn.classList.remove('bg-surface', 'text-on-surface');
+    showToast(`Navigated to page ${pageNo}`, { icon: 'auto_stories' });
+    window.scrollTo({ top: 300, behavior: 'smooth' });
+  }
+
+</script></main><footer class="w-full bg-surface-container-low shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-space-xl pb-space-lg text-on-surface"><div class="max-w-[1440px] mx-auto px-margin"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-gutter mb-space-xl"><div class="lg:col-span-2 pr-space-lg"><div class="flex items-center mb-space-sm">
+            <span class="font-title-editorial text-[20px] tracking-[0.24em] uppercase text-on-surface font-bold">LUXE LANE</span>
+          </div><p class="font-body-md text-body-md text-on-surface-variant max-w-md mb-space-md leading-relaxed">LUXE LANE — Handcrafted contemporary &amp; heritage couture celebrating timeless silhouettes and Pakistani craft. Curating uncompromised luxury across Pakistan and the worldwide diaspora.</p><div class="flex items-center gap-space-sm text-on-surface-variant"><span class="material-symbols-outlined text-[20px]">verified</span><span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-semibold">Registered Pakistan Atelier • Authentic Silk &amp; Pret</span></div></div><div><p class="font-label-caps text-label-caps uppercase text-on-surface tracking-widest font-semibold mb-space-md">Collections</p><ul class="space-y-space-sm text-body-sm font-body-sm text-on-surface-variant"><li class="hover:text-on-surface transition-colors cursor-pointer">Eastern Pret</li><li class="hover:text-on-surface transition-colors cursor-pointer">Luxury Formals</li><li class="hover:text-on-surface transition-colors cursor-pointer">Western Tailoring</li><li class="hover:text-on-surface transition-colors cursor-pointer">Silk Studio</li><li class="hover:text-on-surface transition-colors cursor-pointer">Bridal Atelier</li></ul></div><div><p class="font-label-caps text-label-caps uppercase text-on-surface tracking-widest font-semibold mb-space-md">Customer Care</p><ul class="space-y-space-sm text-body-sm font-body-sm text-on-surface-variant"><li class="hover:text-on-surface transition-colors cursor-pointer">Shipping across Pakistan</li><li class="hover:text-on-surface transition-colors cursor-pointer">TCS &amp; COD Tracking</li><li class="hover:text-on-surface transition-colors cursor-pointer">Bespoke Sizing Guide</li><li class="hover:text-on-surface transition-colors cursor-pointer">Atelier Consultations</li><li class="hover:text-on-surface transition-colors cursor-pointer">Exchange &amp; Alteration Policy</li></ul></div><div><p class="font-label-caps text-label-caps uppercase text-on-surface tracking-widest font-semibold mb-space-md">Our Maison</p><ul class="space-y-space-sm text-body-sm font-body-sm text-on-surface-variant"><li class="hover:text-on-surface transition-colors cursor-pointer">About LUXE LANE</li><li class="hover:text-on-surface transition-colors cursor-pointer">Artisans &amp; Heritage Craft</li><li class="hover:text-on-surface transition-colors cursor-pointer">Karachi Flagship — E-Street</li><li class="hover:text-on-surface transition-colors cursor-pointer">Lahore Maison — Gulberg III</li><li class="hover:text-on-surface transition-colors cursor-pointer">Global DHL Delivery</li></ul></div></div><div class="bg-surface-container py-space-md px-space-md rounded-lg flex flex-col md:flex-row items-center justify-between gap-space-md mb-space-xl"><div class="flex flex-wrap items-center gap-space-md"><span class="font-label-caps text-label-caps uppercase text-on-surface-variant font-semibold">Verified Payment Gateways:</span><span class="px-space-sm py-1 bg-surface rounded text-body-sm font-label-caps text-on-surface uppercase font-semibold">COD (Cash on Delivery)</span><span class="px-space-sm py-1 bg-surface rounded text-body-sm font-label-caps text-on-surface uppercase font-semibold">Visa</span><span class="px-space-sm py-1 bg-surface rounded text-body-sm font-label-caps text-on-surface uppercase font-semibold">Mastercard</span><span class="px-space-sm py-1 bg-surface rounded text-body-sm font-label-caps text-on-surface uppercase font-semibold">Bank Alfalah</span><span class="px-space-sm py-1 bg-surface rounded text-body-sm font-label-caps text-on-surface uppercase font-semibold">HBL Pay</span><span class="px-space-sm py-1 bg-surface rounded text-body-sm font-label-caps text-on-surface uppercase font-semibold">1Link Pay</span></div><div class="text-right text-body-sm font-body-sm text-on-surface-variant"><span class="block">Maison Concierge: +92 21 3587 9000</span><span class="block text-on-surface">support@luxelane.pk • Mon–Sat 10am–8pm PKT</span></div></div><div class="flex flex-col md:flex-row items-center justify-between text-body-sm font-body-sm text-on-surface-variant gap-space-sm"><p>© 2025 LUXE LANE Atelier Private Limited. All rights reserved.</p><div class="flex items-center gap-space-md"><a class="hover:text-on-surface transition-colors" href="#">Privacy Policy</a><a class="hover:text-on-surface transition-colors" href="#">Terms of Service</a><a class="hover:text-on-surface transition-colors" href="#">Nationwide Logistics</a><a class="hover:text-on-surface transition-colors" href="#">Bespoke Fitting</a></div></div></div></footer></body></html>
