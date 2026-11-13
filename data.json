@@ -1,0 +1,132 @@
+[
+  {
+    "id": "MSG-1793818240683-743",
+    "name": "Ayesha Khan",
+    "email": "ayesha.khan@example.com",
+    "phone": "+92 300 1234567",
+    "subject": "Bridal Couture Appointment",
+    "message": "I would like to book a private consultation for bridal wear next month.",
+    "submittedAt": "2026-11-04T18:50:40.683Z",
+    "formattedDate": "04/11/2026, 11:50:40 pm"
+  },
+  {
+    "id": "MSG-1793818529050-228",
+    "name": "Zainab Chaudhry",
+    "email": "zainab.chaudhry@example.pk",
+    "phone": "+92 321 9876543",
+    "subject": "Bespoke Couture Consultation",
+    "message": "Salam, I am interested in custom velvet and zardozi embroidery for December 2026.",
+    "submittedAt": "2026-11-04T18:55:29.050Z",
+    "formattedDate": "04/11/2026, 11:55:29 pm"
+  },
+  {
+    "id": "MSG-1793819917237-4",
+    "name": "Bilal Siddiqui",
+    "email": "bilal.siddiqui@atelier.pk",
+    "phone": "+92 333 4567890",
+    "subject": "Bridal Trousseau Customization",
+    "message": "Requesting a customized sample swatch and private consultation for December wedding.",
+    "submittedAt": "2026-11-04T19:18:37.237Z",
+    "formattedDate": "05/11/2026, 12:18:37 am"
+  },
+  {
+    "id": "MSG-1793879254579-982",
+    "name": "marwa",
+    "email": "marwaabdulwahab123@gmail.com",
+    "phone": "N/A",
+    "subject": "Fabric, Pure Silk & Sizing Guidance",
+    "message": "mujhe apny dress ka custom color krwana h .plz mjhy process or charges bta dyn",
+    "submittedAt": "2026-11-05T11:47:34.579Z",
+    "formattedDate": "05/11/2026, 4:47:34 pm"
+  },
+  {
+    "id": "MSG-1793937307711-263",
+    "name": "marwa",
+    "email": "marwaabdulwahab123@gmail.com",
+    "phone": "N/A",
+    "subject": "Bespoke Couture Consultation",
+    "message": "silk clothes",
+    "submittedAt": "2026-11-06T03:55:07.711Z",
+    "formattedDate": "06/11/2026, 8:55:07 am"
+  },
+  {
+    "id": "MSG-1793940242318-926",
+    "name": "marwa",
+    "email": "marwaabdulwahab123@gmail.com",
+    "phone": "N/A",
+    "subject": "Bespoke Couture Consultation",
+    "message": "silk clothes",
+    "submittedAt": "2026-11-06T04:44:02.319Z",
+    "formattedDate": "06/11/2026, 9:44:02 am"
+  },
+  {
+    "id": "MSG-1793940508361-596",
+    "name": "ayanali",
+    "email": "link.hamza07@gmail.com",
+    "phone": "+923035757575",
+    "subject": "Order Status & Express Dispatch",
+    "message": "jhuyoupik;",
+    "submittedAt": "2026-11-06T04:48:28.361Z",
+    "formattedDate": "06/11/2026, 9:48:28 am"
+  },
+  {
+    "id": "MSG-1793940939673-62",
+    "name": "marwa",
+    "email": "marwaabdulwahab123@gmail.com",
+    "phone": "N/A",
+    "subject": "Bespoke Couture Consultation",
+    "message": "yumjingytftrvuh",
+    "submittedAt": "2026-11-06T04:55:39.673Z",
+    "formattedDate": "06/11/2026, 9:55:39 am"
+  },
+  {
+    "id": "MSG-1793962039644-191",
+    "name": "marwa",
+    "email": "marwaabdulwahab123@gmail.com",
+    "phone": "N/A",
+    "subject": "Bespoke Couture Consultation",
+    "message": "silk",
+    "submittedAt": "2026-11-06T10:47:19.644Z",
+    "formattedDate": "06/11/2026, 3:47:19 pm"
+  },
+  {
+    "id": "MSG-1793962227809-715",
+    "name": "marwa",
+    "email": "marwaabdulwahab123@gmail.com",
+    "phone": "N/A",
+    "subject": "Bespoke Couture Consultation",
+    "message": "THFGHF",
+    "submittedAt": "2026-11-06T10:50:27.809Z",
+    "formattedDate": "06/11/2026, 3:50:27 pm"
+  },
+  {
+    "id": "MSG-1793962331505-92",
+    "name": "MARWA",
+    "email": "marwaabdulwahab123@gmail.com",
+    "phone": "N/A",
+    "subject": "Bespoke Couture Consultation",
+    "message": "tdgtd",
+    "submittedAt": "2026-11-06T10:52:11.505Z",
+    "formattedDate": "06/11/2026, 3:52:11 pm"
+  },
+  {
+    "id": "MSG-1793962463675-158",
+    "name": "marwa",
+    "email": "marwaabdulwahab123@gmail.com",
+    "phone": "N/A",
+    "subject": "Bespoke Couture Consultation",
+    "message": "silk clothes",
+    "submittedAt": "2026-11-06T10:54:23.675Z",
+    "formattedDate": "06/11/2026, 3:54:23 pm"
+  },
+  {
+    "id": "MSG-1793962909842-745",
+    "name": "marwa",
+    "email": "marwaabdulwahab123@gmail.com",
+    "phone": "03361137476",
+    "subject": "Bespoke Couture Consultation",
+    "message": "silk clothes",
+    "submittedAt": "2026-11-06T11:01:49.842Z",
+    "formattedDate": "06/11/2026, 4:01:49 pm"
+  }
+]
