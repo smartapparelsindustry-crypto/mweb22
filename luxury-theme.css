@@ -1,0 +1,453 @@
+/* ==========================================================================
+   LUXE LANE - HAUTE COUTURE LUXURY AESTHETIC THEME
+   Palette: Soft Ivory (#FAF7F2), Beige/Bronze Accent (#8A6D4B)
+   Headings: Cormorant Garamond | Body: Jost
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+
+:root {
+  --lux-ivory: #FAF7F2;
+  --lux-ivory-light: #FFFFFF;
+  --lux-ivory-warm: #F4EFEA;
+  --lux-ivory-muted: #EBE4DC;
+  --lux-beige: #8A6D4B;
+  --lux-beige-dark: #705638;
+  --lux-beige-light: #A3845E;
+  --lux-beige-soft: rgba(138, 109, 75, 0.12);
+  --lux-charcoal: #1C1B1A;
+  --lux-text-muted: #5C5854;
+  --lux-radius-sm: 4px;
+  --lux-radius-md: 8px;
+  --lux-radius-lg: 12px;
+  --lux-shadow-soft: 0 10px 25px -4px rgba(28, 27, 26, 0.06), 0 4px 10px -2px rgba(28, 27, 26, 0.03);
+  --lux-shadow-hover: 0 18px 36px -6px rgba(28, 27, 26, 0.10), 0 8px 16px -4px rgba(28, 27, 26, 0.04);
+}
+
+/* 1. GLOBAL BACKGROUND: Soft Ivory #FAF7F2 & NORMAL VERTICAL SCROLL */
+html {
+  overflow-x: clip;
+  overflow-y: auto;
+  height: auto;
+  min-height: 100%;
+}
+
+body {
+  background-color: var(--lux-ivory) !important;
+  color: var(--lux-charcoal) !important;
+  font-family: 'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+  overflow-y: visible;
+  height: auto;
+  min-height: 100%;
+  position: relative;
+}
+
+main {
+  overflow-x: clip;
+  width: 100%;
+}
+
+/* Background utility overrides */
+.bg-surface,
+.bg-surface-bright,
+.bg-background,
+body.bg-surface,
+main.bg-surface {
+  background-color: var(--lux-ivory) !important;
+}
+
+.bg-surface-container,
+.bg-surface-container-low {
+  background-color: var(--lux-ivory-warm) !important;
+}
+
+.bg-surface-container-high,
+.bg-surface-container-highest,
+.bg-surface-variant {
+  background-color: var(--lux-ivory-muted) !important;
+}
+
+/* Sticky Header Soft Ivory glass effect */
+header.fixed,
+header {
+  background-color: rgba(250, 247, 242, 0.96) !important;
+  border-bottom: 1px solid rgba(138, 109, 75, 0.15) !important;
+}
+
+/* Announcement Top Bar */
+.bg-tertiary-fixed\/60,
+header > div:first-child {
+  background-color: #EDE6DC !important;
+  color: var(--lux-beige-dark) !important;
+  border-bottom: 1px solid rgba(138, 109, 75, 0.12) !important;
+}
+
+/* 2. TYPOGRAPHY: Cormorant Garamond for Headings */
+h1, h2, h3, h4, h5, h6,
+.font-display-hero,
+.font-display-hero-mobile,
+.font-headline-lg,
+.font-headline-md,
+.font-headline-sm,
+.font-title-editorial,
+.brand-title {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  letter-spacing: 0.02em !important;
+  font-weight: 500;
+}
+
+h1, .font-display-hero {
+  font-weight: 400 !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* 3. TYPOGRAPHY: Jost for Body Text, Navigation, Labels, and UI */
+p, span:not(.material-symbols-outlined), a:not(.font-title-editorial), label, input, select, textarea,
+.font-body-lg,
+.font-body-md,
+.font-body-sm,
+.font-label-caps,
+.font-label-sm,
+.font-price-lg,
+.font-price-md {
+  font-family: 'Jost', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* CRITICAL: Never break Material Symbols icon font! */
+.material-symbols-outlined,
+[class*="material-symbols"] {
+  font-family: 'Material Symbols Outlined' !important;
+}
+
+/* Editorial Brand Title in Header */
+a[data-path="home"] span,
+.font-title-editorial {
+  letter-spacing: 0.22em !important;
+}
+
+/* 4. INCREASED SPACING BETWEEN SECTIONS */
+main > section,
+section.py-space-xl,
+section.py-space-lg {
+  padding-top: clamp(3.5rem, 6vw, 6rem) !important;
+  padding-bottom: clamp(3.5rem, 6vw, 6rem) !important;
+}
+
+/* Hero section spacing adjustment so it keeps elegance under fixed header */
+section.relative.-mt-20,
+section.relative.w-full.overflow-hidden.-mt-20 {
+  padding-top: 0 !important;
+  padding-bottom: clamp(3rem, 5vw, 5rem) !important;
+}
+
+/* Breadcrumb / Editorial sub-headers in shop and PDP */
+section.w-full.bg-surface-container-low.py-space-lg {
+  padding-top: clamp(2rem, 3.5vw, 3rem) !important;
+  padding-bottom: clamp(2rem, 3.5vw, 3rem) !important;
+}
+
+/* Section dividers & subtle rules */
+hr, .border-outline-variant {
+  border-color: rgba(138, 109, 75, 0.18) !important;
+}
+
+/* 5. PRODUCT IMAGES: Slightly Rounded (8px-10px) with Soft Luxury Shadow */
+/* Product cards container */
+.group.flex.flex-col.bg-surface-container-low,
+.group.cursor-pointer,
+[id^="productGrid"] > div,
+.product-card {
+  border-radius: var(--lux-radius-md) !important;
+  background-color: #FFFFFF !important;
+  border: 1px solid rgba(138, 109, 75, 0.12) !important;
+  box-shadow: var(--lux-shadow-soft) !important;
+  overflow: hidden !important;
+  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+.group.flex.flex-col.bg-surface-container-low:hover,
+[id^="productGrid"] > div:hover,
+.product-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: var(--lux-shadow-hover) !important;
+  border-color: rgba(138, 109, 75, 0.35) !important;
+}
+
+/* Image wrappers and actual product photos */
+.group .relative.aspect-\[3\/4\],
+.product-image-container,
+.aspect-\[3\/4\],
+.aspect-\[4\/5\] {
+  border-top-left-radius: var(--lux-radius-md) !important;
+  border-top-right-radius: var(--lux-radius-md) !important;
+  overflow: hidden !important;
+}
+
+.group .relative.aspect-\[3\/4\] img,
+.product-card img,
+.aspect-\[3\/4\] img,
+.aspect-\[4\/5\] img {
+  border-radius: 0 !important;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+/* Standalone product images (like in Product Details page) */
+#mainProductImage,
+.product-gallery-img,
+main .aspect-\[3\/4\] > img,
+main .aspect-\[4\/5\] > img {
+  border-radius: var(--lux-radius-md) !important;
+  box-shadow: var(--lux-shadow-soft) !important;
+}
+
+/* Product thumbnail strips in PDP */
+.thumbnail-img,
+button img.object-cover {
+  border-radius: 6px !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05) !important;
+}
+
+/* 6. BUTTONS: Thin Border and Beige Color #8A6D4B */
+/* Primary Action Buttons (Add to Cart, Checkout, Explore, CTA) */
+button.bg-primary,
+a.bg-primary,
+button.bg-secondary,
+a.bg-secondary,
+.btn-primary,
+#addToBagBtn,
+#checkoutBtn,
+[onclick*="triggerAddToCart"],
+[onclick*="addToCartItem"],
+[onclick*="quickAddToCart"] {
+  background-color: var(--lux-beige) !important;
+  color: var(--lux-ivory) !important;
+  border: 1px solid var(--lux-beige) !important;
+  border-radius: var(--lux-radius-sm) !important;
+  font-family: 'Jost', sans-serif !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  transition: all 0.25s ease-in-out !important;
+  box-shadow: 0 4px 12px rgba(138, 109, 75, 0.15) !important;
+}
+
+button.bg-primary:hover,
+a.bg-primary:hover,
+button.bg-secondary:hover,
+a.bg-secondary:hover,
+.btn-primary:hover,
+#addToBagBtn:hover,
+#checkoutBtn:hover,
+[onclick*="triggerAddToCart"]:hover,
+[onclick*="addToCartItem"]:hover,
+[onclick*="quickAddToCart"]:hover {
+  background-color: var(--lux-beige-dark) !important;
+  border-color: var(--lux-beige-dark) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 6px 18px rgba(112, 86, 56, 0.25) !important;
+}
+
+/* Secondary / Outline Buttons (View Details, Inquire, Outline CTAs) */
+button.border-primary,
+a.border-primary,
+button.border-outline,
+a.border-outline,
+.btn-secondary {
+  border: 1px solid var(--lux-beige) !important;
+  color: var(--lux-beige) !important;
+  background-color: transparent !important;
+  border-radius: var(--lux-radius-sm) !important;
+  font-family: 'Jost', sans-serif !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  transition: all 0.25s ease-in-out !important;
+}
+
+button.border-primary:hover,
+a.border-primary:hover,
+button.border-outline:hover,
+a.border-outline:hover,
+.btn-secondary:hover {
+  background-color: var(--lux-beige) !important;
+  color: var(--lux-ivory) !important;
+  border-color: var(--lux-beige) !important;
+}
+
+/* Sapphire-style collection tabs active state */
+.collection-tab.active-tab {
+  color: var(--lux-beige) !important;
+  border-bottom-color: var(--lux-beige) !important;
+  font-weight: 600 !important;
+}
+
+/* Filter & Sort buttons */
+[onclick*="toggleMobileFilter"],
+[onclick*="toggleSortDropdown"] {
+  border: 1px solid rgba(138, 109, 75, 0.25) !important;
+  border-radius: var(--lux-radius-sm) !important;
+  padding: 0.4rem 0.85rem !important;
+  color: var(--lux-beige-dark) !important;
+  background-color: var(--lux-ivory-warm) !important;
+}
+
+[onclick*="toggleMobileFilter"]:hover,
+[onclick*="toggleSortDropdown"]:hover {
+  border-color: var(--lux-beige) !important;
+  background-color: #FFFFFF !important;
+}
+
+/* Grid view toggle buttons */
+.grid-view-btn.active-grid-view,
+.grid-view-btn.bg-surface-container {
+  background-color: var(--lux-beige) !important;
+  color: var(--lux-ivory) !important;
+  border-radius: 4px !important;
+}
+
+/* Size selection buttons */
+.size-btn {
+  background-color: var(--lux-ivory-warm) !important;
+  color: var(--lux-charcoal) !important;
+  border: 1px solid rgba(138, 109, 75, 0.3) !important;
+  border-radius: var(--lux-radius-sm) !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+.size-btn:hover {
+  border-color: var(--lux-beige) !important;
+  color: var(--lux-beige) !important;
+}
+
+.sidebar-size-btn.bg-primary,
+.size-btn.selected,
+.size-btn.active,
+.size-btn.bg-primary,
+.mobile-size-btn.selected {
+  background-color: var(--lux-beige) !important;
+  border-color: var(--lux-beige) !important;
+  color: #FFFFFF !important;
+  font-weight: 600 !important;
+  box-shadow: 0 2px 8px rgba(138, 109, 75, 0.25) !important;
+}
+
+.sidebar-size-btn,
+.mobile-size-btn {
+  border: 1px solid rgba(138, 109, 75, 0.3) !important;
+  border-radius: var(--lux-radius-sm) !important;
+  transition: all 0.2s ease !important;
+}
+
+.sidebar-size-btn:hover,
+.mobile-size-btn:hover {
+  border-color: var(--lux-beige) !important;
+  color: var(--lux-beige) !important;
+}
+
+/* Color selection buttons */
+.color-btn {
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  outline: none !important;
+}
+
+.color-btn:hover {
+  transform: scale(1.15) !important;
+}
+
+.color-btn.active-color,
+.color-btn.ring-2 {
+  transform: scale(1.15) !important;
+  box-shadow: 0 0 0 2px var(--lux-ivory), 0 0 0 4px var(--lux-beige) !important;
+}
+
+/* Quick Add button inside card */
+.group button[onclick*="quickAddToCart"],
+.group button[onclick*="addToCartItem"] {
+  border: 1px solid var(--lux-beige) !important;
+  background-color: var(--lux-beige) !important;
+  color: var(--lux-ivory) !important;
+}
+
+/* Cart badge on header */
+#cartBadgeCount,
+.cart-count-badge {
+  background-color: var(--lux-beige) !important;
+  color: #FFFFFF !important;
+}
+
+/* Cart Drawer Styling */
+#cartDrawer {
+  background-color: var(--lux-ivory) !important;
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.12) !important;
+}
+
+#cartDrawer header,
+#cartDrawer .p-6.border-b {
+  background-color: var(--lux-ivory-warm) !important;
+  border-bottom: 1px solid rgba(138, 109, 75, 0.15) !important;
+}
+
+#cartDrawer .p-6.border-t {
+  background-color: var(--lux-ivory-warm) !important;
+  border-top: 1px solid rgba(138, 109, 75, 0.15) !important;
+}
+
+#cartDrawer button[onclick*="cart.html"],
+#cartDrawer a[href*="cart.html"],
+#cartDrawer .checkout-btn {
+  background-color: var(--lux-beige) !important;
+  border: 1px solid var(--lux-beige) !important;
+  color: var(--lux-ivory) !important;
+}
+
+/* Text Accent Color overrides */
+.text-secondary,
+.text-primary-accent {
+  color: var(--lux-beige) !important;
+}
+
+/* Price highlighting */
+.font-price-lg,
+.font-price-md {
+  color: var(--lux-charcoal) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.04em !important;
+}
+
+/* Wishlist heart button styling */
+button[onclick*="toggleWishlist"] {
+  background-color: rgba(250, 247, 242, 0.9) !important;
+  border: 1px solid rgba(138, 109, 75, 0.2) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+}
+
+button[onclick*="toggleWishlist"]:hover {
+  background-color: #FFFFFF !important;
+  border-color: var(--lux-beige) !important;
+}
+
+/* Badges (New In, TCS 48-Hour, Ready-to-Ship) */
+.badge-luxe,
+.bg-secondary-container,
+[class*="bg-secondary-container"] {
+  background-color: rgba(138, 109, 75, 0.12) !important;
+  color: var(--lux-beige-dark) !important;
+  border: 1px solid rgba(138, 109, 75, 0.25) !important;
+  border-radius: var(--lux-radius-sm) !important;
+}
+
+/* Navigation active tab highlight */
+nav a.bg-primary {
+  background-color: var(--lux-beige) !important;
+  border: 1px solid var(--lux-beige) !important;
+  color: #FFFFFF !important;
+}
+
+nav a:hover {
+  color: var(--lux-beige) !important;
+}
