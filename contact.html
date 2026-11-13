@@ -1,0 +1,638 @@
+﻿<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="web_standard" name="shell-type"/>
+  <title>Contact Us — Maison Concierge & Atelier | LUXE LANE</title>
+
+  <!-- Google Fonts: Cormorant Garamond & Jost + Material Symbols -->
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+
+  <style>
+    @layer base {
+      html, body { margin:0; padding:0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface": "#FAF7F2",
+            "background": "#FAF7F2",
+            "surface-bright": "#FAF7F2",
+            "primary": "#000000",
+            "on-primary": "#ffffff",
+            "secondary": "#8A6D4B",
+            "on-secondary": "#ffffff",
+            "on-surface": "#1b1c1a",
+            "on-surface-variant": "#4a4640",
+            "surface-container": "#efeeea",
+            "surface-container-low": "#f5f3ef",
+            "surface-container-high": "#eae8e4",
+            "surface-container-lowest": "#ffffff",
+            "outline-variant": "#ccc5bd"
+          },
+          fontFamily: {
+            "display-hero": ["Cormorant Garamond", "serif"],
+            "headline-lg": ["Cormorant Garamond", "serif"],
+            "headline-md": ["Cormorant Garamond", "serif"],
+            "headline-sm": ["Cormorant Garamond", "serif"],
+            "title-editorial": ["Cormorant Garamond", "serif"],
+            "body-lg": ["Jost", "sans-serif"],
+            "body-md": ["Jost", "sans-serif"],
+            "body-sm": ["Jost", "sans-serif"],
+            "label-caps": ["Jost", "sans-serif"],
+            "label-sm": ["Jost", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+
+  <link rel="stylesheet" href="luxury-theme.css"/>
+  <script src="site.js" defer></script><script src="search.js" defer></script>
+</head>
+
+<body class="bg-surface font-body-md text-on-surface antialiased selection:bg-secondary-container selection:text-on-secondary-container">
+
+  <!-- ==================== STICKY HEADER ==================== -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-surface/95 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] border-b border-outline-variant/30">
+    <!-- Top Announcement Bar -->
+    <div class="w-full bg-[#EDE6DC] py-1 px-4 text-center text-[#705638] border-b border-outline-variant/20">
+      <p class="font-label-caps text-[10px] sm:text-xs uppercase tracking-widest truncate sm:overflow-visible font-medium">
+        Maison Concierge & Bespoke Inquiries — Karachi & Lahore Ateliers | Nationwide & Global Express
+      </p>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <div class="h-20 max-w-[1440px] mx-auto px-4 sm:px-8 flex items-center justify-between">
+      <div class="flex items-center gap-3 lg:gap-6">
+        <!-- Mobile Menu Button -->
+        <button id="mobileMenuBtn" aria-label="Open navigation menu" class="lg:hidden p-2 text-on-surface hover:text-secondary rounded-lg focus:outline-none transition-colors">
+          <span class="material-symbols-outlined text-[26px]">menu</span>
+        </button>
+
+        <!-- Brand Logo -->
+        <a class="flex items-center group py-1" data-path="home" href="index.html">
+          <span class="font-title-editorial text-[20px] sm:text-[22px] tracking-[0.24em] uppercase text-on-surface font-bold group-hover:text-secondary transition-colors">
+            LUXE LANE
+          </span>
+        </a>
+
+        <!-- Desktop Nav Links -->
+        <nav class="hidden lg:flex items-center gap-1">
+          <a class="px-2.5 py-1 rounded text-[10.5px] font-label-caps uppercase tracking-[0.14em] text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-medium" data-path="home" href="index.html">Home</a>
+          <a class="px-2.5 py-1 rounded text-[10.5px] font-label-caps uppercase tracking-[0.14em] text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-medium" data-path="women" href="shop.html">Women</a>
+          <a class="px-2.5 py-1 rounded text-[10.5px] font-label-caps uppercase tracking-[0.14em] text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-medium" data-path="men" href="shop.html">Men</a>
+          <a class="px-2.5 py-1 rounded text-[10.5px] font-label-caps uppercase tracking-[0.14em] text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-medium" data-path="new-arrivals" href="shop.html">New Arrivals</a>
+          <a class="px-2.5 py-1 rounded text-[10.5px] font-label-caps uppercase tracking-[0.14em] text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-medium" data-path="eastern-wear" href="shop.html">Eastern Wear</a>
+          <a class="px-2.5 py-1 rounded text-[10.5px] font-label-caps uppercase tracking-[0.14em] text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-medium" data-path="western-wear" href="shop.html">Western Wear</a>
+          <a class="px-2.5 py-1 rounded text-[10.5px] font-label-caps uppercase tracking-[0.14em] text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-medium" data-path="sale" href="shop.html">Sale</a>
+          <a aria-current="page" class="px-2.5 py-1 rounded text-[10.5px] font-label-caps uppercase tracking-[0.14em] transition-colors bg-primary text-on-primary font-semibold" data-path="contact" href="contact.html">Contact Us</a>
+        </nav>
+      </div>
+
+      <!-- Right Header Tools -->
+      <div class="flex items-center gap-1 sm:gap-4">
+        <!-- Search Bar -->
+        <div class="hidden md:flex items-center bg-surface-container-low px-3 py-1 rounded-full text-on-surface-variant focus-within:ring-1 focus-within:ring-secondary/50 transition-all">
+          <span class="material-symbols-outlined text-[18px] mr-1">search</span>
+          <input id="headerSearchInput" class="bg-transparent border-none text-body-sm font-body-sm text-on-surface focus:outline-none w-36 lg:w-44 placeholder:text-on-surface-variant/70" placeholder="Search pret, bridal..." type="text"/>
+        </div>
+
+        <button id="mobileSearchBtn" aria-label="Search" class="md:hidden p-2 text-on-surface hover:text-secondary transition-colors">
+          <span class="material-symbols-outlined text-[22px]">search</span>
+        </button>
+
+        <!-- Currency Selector -->
+        <div class="relative hidden sm:inline-block">
+          <button id="currencyBtn" class="flex items-center gap-1 px-2 py-1 text-on-surface font-label-caps tracking-wider uppercase hover:text-secondary transition-colors">
+            <span id="currentCurrencyLabel" class="text-secondary font-semibold">PKR ₨</span>
+            <span class="material-symbols-outlined text-[16px] text-on-surface-variant">expand_more</span>
+          </button>
+          <div id="currencyDropdown" class="hidden absolute right-0 mt-2 w-32 bg-surface-container-lowest rounded-lg shadow-xl py-1 z-50 border border-outline-variant/20">
+            <button onclick="setCurrency('PKR', '₨')" class="w-full text-left px-3 py-1.5 text-xs font-semibold hover:bg-surface-container text-on-surface flex justify-between"><span>PKR</span><span>₨</span></button>
+            <button onclick="setCurrency('USD', '$')" class="w-full text-left px-3 py-1.5 text-xs font-semibold hover:bg-surface-container text-on-surface flex justify-between"><span>USD</span><span>$</span></button>
+            <button onclick="setCurrency('AED', 'د.إ')" class="w-full text-left px-3 py-1.5 text-xs font-semibold hover:bg-surface-container text-on-surface flex justify-between"><span>AED</span><span>د.إ</span></button>
+            <button onclick="setCurrency('GBP', '£')" class="w-full text-left px-3 py-1.5 text-xs font-semibold hover:bg-surface-container text-on-surface flex justify-between"><span>GBP</span><span>£</span></button>
+          </div>
+        </div>
+
+        <!-- Wishlist -->
+        <a aria-label="Wishlist" class="relative p-2 text-on-surface hover:text-secondary transition-colors" data-path="wishlist" href="shop.html?filter=wishlist">
+          <span class="material-symbols-outlined text-[22px]">favorite</span>
+          <span id="headerWishlistBadge" class="absolute top-1 right-1 h-4 w-4 bg-primary text-on-primary font-label-sm text-[9px] flex items-center justify-center rounded-full">0</span>
+        </a>
+
+        <!-- Cart Bag -->
+        <a aria-label="Cart" class="relative p-2 text-on-surface hover:text-secondary transition-colors cursor-pointer" data-path="shopping-bag" href="javascript:void(0)" onclick="openCartDrawer()">
+          <span class="material-symbols-outlined text-[22px]">shopping_bag</span>
+          <span id="headerCartBadge" class="absolute top-1 right-1 h-4 w-4 bg-secondary text-on-secondary font-label-sm text-[9px] flex items-center justify-center rounded-full">0</span>
+        </a>
+
+        <!-- Account -->
+        <div class="flex items-center pl-1 sm:pl-2">
+          <a aria-label="Account" class="p-0.5 rounded-full hover:ring-2 hover:ring-secondary transition-all" data-path="account" href="javascript:void(0)" onclick="openAccountModal()">
+            <img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjMu90Dj8NmF2DySz8uK2NSdVm5j9lKGm-U1QKOCRWaGCSu7LvMJAd_19fPfPRB6tYIMSt_h6nXRqM60PhXWxIeQb44aQVOhQ5idutpa57Wh1nBt7OUG986mSz0laKz-G-1cUOu6EG8KO2iQ_gPeH05KBtcZ75M6ud764ZejkS7uGorHgLPNlT4r1CYOAphdTLSmF7o4e30iBa8BkKijSpsYH9i6YQ_Zqs9JegKPnqusYLGS9mfvSq"/>
+          </a>
+        </div>
+      </div>
+    </div>
+  <div id="mobileDrawerBackdrop" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden transition-opacity duration-300 opacity-0"></div>
+<div id="mobileDrawer" class="fixed top-0 left-0 bottom-0 w-[85%] max-w-sm bg-surface-container-lowest z-50 transform -translate-x-full transition-transform duration-300 ease-in-out shadow-2xl flex flex-col justify-between overflow-y-auto">
+  <div>
+    <div class="p-5 flex items-center justify-between border-b border-outline-variant/30 bg-surface">
+      <div class="flex items-center">
+        <span class="font-title-editorial text-[19px] tracking-[0.24em] uppercase text-on-surface font-bold">LUXE LANE</span>
+      </div>
+      <button id="closeMobileDrawerBtn" aria-label="Close menu" class="p-2 text-on-surface-variant hover:text-on-surface rounded-full">
+        <span class="material-symbols-outlined text-[24px]">close</span>
+      </button>
+    </div>
+    <div class="p-4 border-b border-outline-variant/20">
+      <div class="flex items-center bg-surface-container-low px-3 py-2.5 rounded-lg text-on-surface-variant">
+        <span class="material-symbols-outlined text-[20px] mr-2">search</span>
+        <input id="mobileSearchInput" class="bg-transparent border-none text-body-sm text-on-surface focus:outline-none w-full" placeholder="Search pret, bridal, silk..." type="text"/>
+      </div>
+    </div>
+    <nav class="p-4 space-y-1">
+      <a href="index.html" class="flex items-center justify-between px-3 py-3 rounded-lg text-on-surface hover:bg-surface-container font-semibold"><span>Home</span><span class="material-symbols-outlined text-[18px]">chevron_right</span></a>
+      <a href="shop.html" class="flex items-center justify-between px-3 py-3 rounded-lg text-on-surface hover:bg-surface-container font-semibold"><span>Women Pret</span><span class="material-symbols-outlined text-[18px]">chevron_right</span></a>
+      <a href="shop.html" class="flex items-center justify-between px-3 py-3 rounded-lg text-on-surface hover:bg-surface-container"><span>Men Tailoring</span><span class="material-symbols-outlined text-[18px]">chevron_right</span></a>
+      <a href="shop.html" class="flex items-center justify-between px-3 py-3 rounded-lg text-on-surface hover:bg-surface-container"><span>New Arrivals</span><span class="bg-secondary-fixed text-on-secondary-fixed text-[10px] px-2 py-0.5 rounded font-bold uppercase">NEW</span></a>
+      <a href="shop.html" class="flex items-center justify-between px-3 py-3 rounded-lg text-on-surface hover:bg-surface-container"><span>Eastern Wear</span><span class="material-symbols-outlined text-[18px]">chevron_right</span></a>
+      <a href="shop.html" class="flex items-center justify-between px-3 py-3 rounded-lg text-on-surface hover:bg-surface-container"><span>Western Wear</span><span class="material-symbols-outlined text-[18px]">chevron_right</span></a>
+      <a href="shop.html" class="flex items-center justify-between px-3 py-3 rounded-lg text-error hover:bg-error-container/30 font-semibold"><span>Festive Sale</span><span class="bg-error text-on-error text-[10px] px-2 py-0.5 rounded font-bold uppercase">UP TO 30%</span></a>
+    </nav>
+  </div>
+  <div class="p-4 border-t border-outline-variant/30 bg-surface-container-low space-y-3">
+    <div class="flex items-center justify-between">
+      <span class="text-xs uppercase font-semibold text-on-surface-variant">Currency</span>
+      <select onchange="setCurrency(this.value, this.options[this.selectedIndex].text.split(' ')[1])" class="bg-surface border border-outline-variant/40 rounded px-2 py-1 text-xs font-semibold text-on-surface">
+        <option value="PKR">PKR ₨</option>
+        <option value="USD">USD $</option>
+        <option value="AED">AED د.إ</option>
+        <option value="GBP">GBP £</option>
+      </select>
+    </div>
+    <div class="flex gap-2">
+      <button onclick="toggleMobileDrawer(false); openAtelierModal();" class="flex-1 py-2.5 px-3 bg-surface-container text-on-surface font-label-caps text-[11px] uppercase tracking-wider rounded border border-outline-variant/30 text-center font-semibold">
+        Book Atelier
+      </button>
+      <a href="javascript:void(0)" onclick="toggleMobileDrawer(false); openCartDrawer();" class="flex-1 py-2.5 px-3 bg-primary text-on-primary font-label-caps text-[11px] uppercase tracking-wider rounded text-center font-semibold flex items-center justify-center gap-1 cursor-pointer">
+        <span class="material-symbols-outlined text-[16px]">shopping_bag</span> Bag (<span class="cart-badge">3</span>)
+      </a>
+    </div>
+  </div>
+</div></header>
+
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="w-full pt-28 pb-16 bg-surface min-h-[calc(100vh-80px)]">
+
+    <!-- Page Header / Breadcrumb -->
+    <section class="w-full bg-surface-container-low px-4 sm:px-8 py-10 border-b border-outline-variant/30">
+      <div class="max-w-[1240px] mx-auto">
+        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-on-surface-variant mb-3">
+          <a class="font-label-caps text-xs uppercase hover:text-on-surface transition-colors" href="index.html">Home</a>
+          <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+          <span class="font-label-caps text-xs uppercase text-secondary font-semibold">Contact Us</span>
+        </nav>
+        <p class="font-label-caps text-xs uppercase tracking-[0.25em] text-secondary font-semibold mb-2">
+          Maison Concierge & Bespoke Services
+        </p>
+        <h1 class="font-display-hero text-headline-lg md:text-display-hero text-on-surface tracking-tight mb-3">
+          Get In Touch With Our Atelier
+        </h1>
+        <p class="font-body-md text-base text-on-surface-variant max-w-2xl leading-relaxed">
+          Whether you are commissioning an heirloom bridal ensemble, scheduling an in-person silhouette consultation, or tracking an international delivery — our concierge team is at your dedicated service.
+        </p>
+      </div>
+    </section>
+
+    <!-- Two-Column Section: Atelier Information & Contact Form -->
+    <section class="max-w-[1240px] mx-auto px-4 sm:px-8 py-14">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+
+        <!-- Left Column: Atelier Information & Highlights (5 Columns) -->
+        <div class="lg:col-span-5 space-y-6">
+
+          <!-- Karachi Flagship Card -->
+          <div class="bg-surface-container-lowest p-7 rounded-xl border border-outline-variant/50 shadow-sm">
+            <div class="flex items-center gap-3 mb-3 text-secondary">
+              <span class="material-symbols-outlined text-[24px]">apartment</span>
+              <h3 class="font-title-editorial text-[18px] font-semibold text-on-surface uppercase tracking-wider">
+                Karachi Flagship Atelier
+              </h3>
+            </div>
+            <p class="font-body-sm text-on-surface-variant leading-relaxed mb-3">
+              Suite 4B, Cliftons Haute Quarter, Block 4, Clifton, Karachi, Pakistan.
+            </p>
+            <div class="flex items-center gap-2 text-xs font-label-caps text-secondary font-semibold">
+              <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+              Private Fitting Appointments & Couture Viewings
+            </div>
+          </div>
+
+          <!-- Lahore Studio Card -->
+          <div class="bg-surface-container-lowest p-7 rounded-xl border border-outline-variant/50 shadow-sm">
+            <div class="flex items-center gap-3 mb-3 text-secondary">
+              <span class="material-symbols-outlined text-[24px]">storefront</span>
+              <h3 class="font-title-editorial text-[18px] font-semibold text-on-surface uppercase tracking-wider">
+                Lahore Couture Studio
+              </h3>
+            </div>
+            <p class="font-body-sm text-on-surface-variant leading-relaxed mb-3">
+              12-C, M.M. Alam Road, Gulberg III, Lahore, Pakistan.
+            </p>
+            <div class="flex items-center gap-2 text-xs font-label-caps text-secondary font-semibold">
+              <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+              Bridal Trousseau Salons & Custom Embroidery Archive
+            </div>
+          </div>
+
+          <!-- Direct Line & WhatsApp Card -->
+          <div class="bg-surface-container-lowest p-7 rounded-xl border border-outline-variant/50 shadow-sm">
+            <div class="flex items-center gap-3 mb-3 text-secondary">
+              <span class="material-symbols-outlined text-[24px]">call</span>
+              <h3 class="font-title-editorial text-[18px] font-semibold text-on-surface uppercase tracking-wider">
+                Direct Inquiries & WhatsApp
+              </h3>
+            </div>
+            <div class="space-y-2 text-sm">
+              <p class="font-body-sm text-on-surface">
+                Concierge Desk: <a href="tel:+922135870000" class="text-secondary font-semibold hover:underline">+92 (021) 3587-LUXE</a>
+              </p>
+              <p class="font-body-sm text-on-surface">
+                WhatsApp VIP: <a href="https://wa.me/923008299100" target="_blank" class="text-secondary font-semibold hover:underline">+92 300 8299100</a>
+              </p>
+              <p class="font-body-sm text-on-surface">
+                Email: <a href="mailto:concierge@luxelane.pk" class="text-secondary font-semibold hover:underline">concierge@luxelane.pk</a>
+              </p>
+              <p class="font-body-sm text-on-surface-variant text-xs pt-1">
+                Hours: Monday – Saturday, 11:00 AM – 8:00 PM PKT
+              </p>
+            </div>
+          </div>
+
+          <!-- Guaranteed Response Badge -->
+          <div class="p-6 rounded-xl bg-surface-container border border-outline-variant/30 flex items-center gap-4">
+            <span class="material-symbols-outlined text-[34px] text-secondary">verified_user</span>
+            <div>
+              <h4 class="font-title-editorial text-sm font-semibold text-on-surface uppercase tracking-wider">Maison Response Commitment</h4>
+              <p class="font-body-sm text-xs text-on-surface-variant leading-relaxed mt-0.5">
+                All submitted inquiries are securely cataloged and personally acknowledged within 4 business hours by our lead couture stylist.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Interactive Contact Form (7 Columns) -->
+        <div class="lg:col-span-7 bg-surface-container-lowest p-8 sm:p-12 rounded-2xl border border-outline-variant/60 shadow-md">
+          
+          <div class="mb-8">
+            <span class="font-label-caps text-xs uppercase tracking-[0.2em] text-secondary font-semibold block mb-1">
+              Direct Transmission
+            </span>
+            <h2 class="font-display-hero text-2xl sm:text-3xl text-on-surface">
+              Send an Atelier Inquiry
+            </h2>
+            <p class="font-body-sm text-sm text-on-surface-variant mt-1">
+              Please complete the details below. Data is saved directly to our secure database.
+            </p>
+          </div>
+
+          <!-- The Form -->
+          <form id="contactPageForm" action="https://api.web3forms.com/submit" method="POST" onsubmit="handleContactPageSubmit(event)" class="space-y-6" novalidate>
+            <!-- Web3Forms Access Key & Config -->
+            <input type="hidden" name="access_key" value="a3ed969f-736a-43ac-912f-4ef84d59b5b0" />
+            <input type="hidden" name="from_name" value="LUXE LANE Atelier Concierge" />
+            <input type="hidden" name="subject" id="web3Subject" value="New Atelier Inquiry from Website" />
+            <input type="checkbox" name="botcheck" class="hidden" style="display: none;" />
+            
+            <!-- Full Name & Email Row -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div>
+                <label for="pageContactName" class="block font-label-caps text-xs uppercase tracking-wider text-on-surface font-semibold mb-2">
+                  Full Name <span class="text-amber-800">*</span>
+                </label>
+                <input type="text" id="pageContactName" name="name" required
+                  placeholder="e.g. Mahnoor Tariq"
+                  class="w-full px-4 py-3.5 bg-surface border border-outline-variant rounded-md font-body-md text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all" />
+              </div>
+
+              <div>
+                <label for="pageContactEmail" class="block font-label-caps text-xs uppercase tracking-wider text-on-surface font-semibold mb-2">
+                  Email Address <span class="text-amber-800">*</span>
+                </label>
+                <input type="email" id="pageContactEmail" name="email" required
+                  placeholder="mahnoor@example.com"
+                  class="w-full px-4 py-3.5 bg-surface border border-outline-variant rounded-md font-body-md text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all" />
+              </div>
+            </div>
+
+            <!-- Phone & Inquiry Topic Row -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div>
+                <label for="pageContactPhone" class="block font-label-caps text-xs uppercase tracking-wider text-on-surface font-semibold mb-2">
+                  Phone / WhatsApp <span class="text-xs text-on-surface-variant font-normal">(Optional)</span>
+                </label>
+                <input type="tel" id="pageContactPhone" name="phone"
+                  placeholder="+92 300 1234567"
+                  class="w-full px-4 py-3.5 bg-surface border border-outline-variant rounded-md font-body-md text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all" />
+              </div>
+
+              <div>
+                <label for="pageContactSubject" class="block font-label-caps text-xs uppercase tracking-wider text-on-surface font-semibold mb-2">
+                  Inquiry Topic
+                </label>
+                <select id="pageContactSubject" name="inquiry_topic"
+                  class="w-full px-4 py-3.5 bg-surface border border-outline-variant rounded-md font-body-md text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all cursor-pointer">
+                  <option value="Bespoke Couture Consultation">Bespoke Couture Consultation</option>
+                  <option value="Bridal Trousseau Customization">Bridal Trousseau Customization</option>
+                  <option value="Order Status & Express Dispatch">Order Status & Express Dispatch</option>
+                  <option value="Fabric, Pure Silk & Sizing Guidance">Fabric, Pure Silk & Sizing Guidance</option>
+                  <option value="International Shipment & Duties">International Shipment & Duties</option>
+                  <option value="General Concierge Assistance">General Concierge Assistance</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Message Field -->
+            <div>
+              <label for="pageContactMessage" class="block font-label-caps text-xs uppercase tracking-wider text-on-surface font-semibold mb-2">
+                Your Message / Request <span class="text-amber-800">*</span>
+              </label>
+              <textarea id="pageContactMessage" name="message" rows="5" required
+                placeholder="Please describe your silhouette requirements, event dates, custom color palettes, or any questions for our atelier..."
+                class="w-full px-4 py-3.5 bg-surface border border-outline-variant rounded-md font-body-md text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all resize-y"></textarea>
+            </div>
+
+            <!-- Submit Button with Thin Border and #8A6D4B styling -->
+            <div>
+              <button type="submit" id="pageContactSubmitBtn"
+                class="w-full sm:w-auto min-w-[240px] px-8 py-4 bg-secondary text-surface font-label-caps text-xs uppercase tracking-[0.18em] font-semibold rounded shadow-sm hover:opacity-95 transition-all flex items-center justify-center gap-2">
+                <span id="pageSubmitBtnText">Send Atelier Inquiry</span>
+                <svg id="pageSubmitSpinner" class="hidden animate-spin h-4 w-4 text-surface" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                </svg>
+              </button>
+            </div>
+
+            <!-- ERROR ALERT (Hidden by default) -->
+            <div id="pageContactErrorMsg" class="hidden p-4 rounded-lg bg-red-50 border border-red-200 text-red-800 text-sm font-medium flex items-center gap-3">
+              <span class="material-symbols-outlined text-red-600">error</span>
+              <span id="pageContactErrorText">Error sending message. Please try again.</span>
+            </div>
+
+            <!-- ========================================================
+                 SUCCESS MESSAGE CONTAINER (Directly Below Form)
+                 ======================================================== -->
+            <div id="pageContactSuccessMsg" class="hidden p-6 rounded-xl bg-[#F3F8F2] border border-[#689F63]/50 text-emerald-950 shadow-sm transition-all duration-300">
+              <div class="flex items-start gap-4">
+                <span class="material-symbols-outlined text-[30px] text-emerald-700 shrink-0 mt-0.5">check_circle</span>
+                <div class="space-y-2">
+                  <h4 class="font-title-editorial text-[19px] font-semibold text-emerald-900 tracking-wide">
+                    Message Kamyabi Se Receive Ho Gaya!
+                  </h4>
+                  <p id="pageSuccessText" class="font-body-md text-sm text-emerald-900/90 leading-relaxed">
+                    Shukriya! Aapka message backend database (<code class="bg-emerald-100/60 px-1.5 py-0.5 rounded text-xs font-mono">data.json</code>) mein save ho chuka hai. Hamari concierge team aapse jald rabta karegi.
+                  </p>
+                  <div class="pt-2 border-t border-emerald-800/15 flex flex-wrap items-center gap-4 text-xs font-label-caps text-emerald-800 tracking-wider uppercase">
+                    <span id="pageSuccessRef">Ref: MSG-CONFIRMED</span>
+                    <span>•</span>
+                    <span id="pageSuccessTime">Time: Just Now</span>
+                    <span>•</span>
+                    <span class="text-emerald-700 font-semibold">Node.js Express API Active</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </form>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="max-w-[1240px] mx-auto px-4 sm:px-8 py-10 border-t border-outline-variant/30">
+      <div class="text-center max-w-xl mx-auto mb-10">
+        <span class="font-label-caps text-xs uppercase tracking-[0.2em] text-secondary font-semibold block mb-1">
+          Assistance & Protocols
+        </span>
+        <h3 class="font-display-hero text-2xl sm:text-3xl text-on-surface">
+          Frequently Asked Questions
+        </h3>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/40">
+          <h4 class="font-title-editorial text-base font-semibold text-on-surface mb-2">Bespoke Bridal Lead Time</h4>
+          <p class="font-body-sm text-xs text-on-surface-variant leading-relaxed">
+            Custom bridal wear requires 4–8 weeks for hand zardozi and heirloom embellishments. Express slots are available on private inquiry.
+          </p>
+        </div>
+        <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/40">
+          <h4 class="font-title-editorial text-base font-semibold text-on-surface mb-2">Nationwide & Global Delivery</h4>
+          <p class="font-body-sm text-xs text-on-surface-variant leading-relaxed">
+            Complimentary shipping across Pakistan via TCS Express (24–48h). Worldwide dispatch handled via DHL Express with door-to-door tracking.
+          </p>
+        </div>
+        <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/40">
+          <h4 class="font-title-editorial text-base font-semibold text-on-surface mb-2">Private Studio Fittings</h4>
+          <p class="font-body-sm text-xs text-on-surface-variant leading-relaxed">
+            Appointments at our Karachi and Lahore studios offer one-on-one consultation with our master pattern cutters and fabric archivists.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="w-full bg-surface-container-low shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-space-xl pb-space-lg text-on-surface border-t border-outline-variant/30">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+        <div class="lg:col-span-2 pr-6">
+          <div class="flex items-center mb-3">
+            <span class="font-title-editorial text-[20px] tracking-[0.24em] uppercase text-on-surface font-bold">LUXE LANE</span>
+          </div>
+          <p class="font-body-md text-sm text-on-surface-variant max-w-md mb-4 leading-relaxed">
+            LUXE LANE — Handcrafted contemporary & heritage couture celebrating timeless silhouettes and Pakistani craft. Curating uncompromised luxury across Pakistan and the worldwide diaspora.
+          </p>
+          <div class="flex items-center gap-3 text-on-surface-variant text-sm">
+            <span>Karachi</span> • <span>Lahore</span> • <span>Islamabad</span> • <span>Worldwide</span>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="font-title-editorial text-sm font-semibold uppercase tracking-wider text-on-surface mb-3">Maison</h4>
+          <ul class="space-y-2 text-xs font-label-caps uppercase tracking-wider text-on-surface-variant">
+            <li><a href="index.html" class="hover:text-secondary transition-colors">Home Archive</a></li>
+            <li><a href="shop.html" class="hover:text-secondary transition-colors">All Ready-to-Wear</a></li>
+            <li><a href="shop.html?filter=silk" class="hover:text-secondary transition-colors">Pure Silk Edit</a></li>
+            <li><a href="shop.html?filter=bridal" class="hover:text-secondary transition-colors">Haute Bridal</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-title-editorial text-sm font-semibold uppercase tracking-wider text-on-surface mb-3">Client Services</h4>
+          <ul class="space-y-2 text-xs font-label-caps uppercase tracking-wider text-on-surface-variant">
+            <li><a href="contact.html" class="hover:text-secondary transition-colors text-secondary font-semibold">Contact Atelier</a></li>
+            <li><a href="cart.html" class="hover:text-secondary transition-colors">Shopping Bag & Checkout</a></li>
+            <li><a href="javascript:void(0)" onclick="openAtelierModal()" class="hover:text-secondary transition-colors">Book Private Fitting</a></li>
+            <li><a href="shop.html?filter=wishlist" class="hover:text-secondary transition-colors">Wishlist Portfolio</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-title-editorial text-sm font-semibold uppercase tracking-wider text-on-surface mb-3">Direct Concierge</h4>
+          <p class="font-body-sm text-xs text-on-surface-variant leading-relaxed mb-2">
+            Karachi: +92 (021) 3587-LUXE<br/>
+            WhatsApp: +92 300 8299100<br/>
+            Email: concierge@luxelane.pk
+          </p>
+          <p class="font-label-caps text-[10px] text-secondary font-semibold uppercase tracking-widest">
+            TCS 48-Hour Nationwide Despatch
+          </p>
+        </div>
+      </div>
+
+      <div class="pt-6 border-t border-outline-variant/30 flex flex-col sm:flex-row items-center justify-between text-xs text-on-surface-variant font-label-caps">
+        <p>© 2026 LUXE LANE Couture. All rights reserved.</p>
+        <p class="mt-2 sm:mt-0">Karachi • Lahore • Worldwide Shipping</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== JAVASCRIPT: CONTACT FORM HANDLER ==================== -->
+  <!-- ==================== JAVASCRIPT: CONTACT FORM HANDLER (WEB3FORMS + BACKEND) ==================== -->
+  <script>
+    async function handleContactPageSubmit(event) {
+      event.preventDefault();
+
+      const form = document.getElementById('contactPageForm');
+      const submitBtn = document.getElementById('pageContactSubmitBtn');
+      const btnText = document.getElementById('pageSubmitBtnText');
+      const btnSpinner = document.getElementById('pageSubmitSpinner');
+      const successBox = document.getElementById('pageContactSuccessMsg');
+      const errorBox = document.getElementById('pageContactErrorMsg');
+      const errorText = document.getElementById('pageContactErrorText');
+
+      // Hide alerts
+      if (successBox) successBox.classList.add('hidden');
+      if (errorBox) errorBox.classList.add('hidden');
+
+      const name = document.getElementById('pageContactName').value.trim();
+      const email = document.getElementById('pageContactEmail').value.trim();
+      const phone = document.getElementById('pageContactPhone').value.trim();
+      const subject = document.getElementById('pageContactSubject').value;
+      const message = document.getElementById('pageContactMessage').value.trim();
+
+      // Basic client validation
+      if (!name || !email || !message) {
+        if (errorBox && errorText) {
+          errorText.textContent = 'Barah-e-karam apna naam, email aur message lazmi darj karein.';
+          errorBox.classList.remove('hidden');
+        }
+        return;
+      }
+
+      // Email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        if (errorBox && errorText) {
+          errorText.textContent = 'Barah-e-karam sahi email address darj karein.';
+          errorBox.classList.remove('hidden');
+        }
+        return;
+      }
+
+      // Set loading state
+      if (submitBtn) submitBtn.disabled = true;
+      if (btnText) btnText.textContent = 'Email bheji ja rahi hai...';
+      if (btnSpinner) btnSpinner.classList.remove('hidden');
+
+      // Sync hidden subject field with selected dropdown topic
+      const web3Subject = document.getElementById('web3Subject');
+      if (web3Subject) {
+        web3Subject.value = 'Atelier Inquiry: ' + subject + ' - ' + name;
+      }
+
+      // Prepare FormData directly from the form
+      const formData = new FormData(form);
+
+      try {
+        // 1. Submit directly to Web3Forms API
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: formData
+        });
+
+        const result = await response.json();
+
+        // 2. Also send to local backend as database backup
+        try {
+          const localApiUrl = (window.location.port === '5000') ? '/api/contact' : 'http://localhost:5000/api/contact';
+          fetch(localApiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, phone, subject, message })
+          }).catch(() => {});
+        } catch (_) {}
+
+        if (response.ok && result.success) {
+          if (successBox) {
+            const textEl = document.getElementById('pageSuccessText');
+            const refEl = document.getElementById('pageSuccessRef');
+            const timeEl = document.getElementById('pageSuccessTime');
+
+            if (textEl) textEl.textContent = 'Shukriya! Aapka message direct email inbox par deliver ho chuka hai.';
+            if (refEl) refEl.textContent = 'Status: EMAIL DELIVERED';
+            if (timeEl) timeEl.textContent = 'Sent: ' + new Date().toLocaleTimeString();
+
+            successBox.classList.remove('hidden');
+            successBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+
+          // Reset form fields
+          form.reset();
+
+          if (typeof showToast === 'function') {
+            showToast('Email successfully sent to your inbox!', { icon: 'mark_email_read' });
+          }
+        } else {
+          throw new Error(result.message || 'Web3Forms submission failed.');
+        }
+
+      } catch (err) {
+        console.error('Submission Error:', err);
+        if (errorBox && errorText) {
+          errorText.textContent = err.message || 'Email bhejne mein masla pesh aya. Barah-e-karam dobara koshish karein.';
+          errorBox.classList.remove('hidden');
+        }
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+        if (btnText) btnText.textContent = 'Send Atelier Inquiry';
+        if (btnSpinner) btnSpinner.classList.add('hidden');
+      }
+    }
+  </script>
+</body>
+</html>
